@@ -1,18 +1,19 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var bodyParser = require('body-parser');
+const path = require('path');
+const express = require('express');
+const exphbs = require('express-handlebars')
+const favicon = require('serve-favicon');
+const bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+const routes = require('./routes/index');
 
-var app = express();
+const app = express();
 
-var dotenv = require('dotenv')
+const dotenv = require('dotenv')
 dotenv.load()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -26,7 +27,7 @@ app.use('/', routes);
 app.use(function(req, res, next) {
   res.redirect('/');
   next();
-  // var err = new Error('Not Found');
+  // const err = new Error('Not Found');
   // err.status = 404;
   // next(err);
 });
