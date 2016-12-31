@@ -16,12 +16,12 @@ reddit.r('MakingSense').sort('new').all(res => {
     let moreData = data.data.children.filter(post => !post.data.stickied)
     // keep only the data I will use to display the post
     moreData = moreData.map(post => {
-      const { title, url, selftext, createdAt, score, author, id } = post.data
+      const { title, url, selftext, created_utc, score, author, id } = post.data
       return {
         title,
         url,
         selftext,
-        createdAt,
+        createdAt: created_utc,
         score,
         author,
         id

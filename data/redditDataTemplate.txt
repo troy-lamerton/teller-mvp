@@ -19,6 +19,8 @@ http://www.json-generator.com/
       return 'https://www.reddit.com/r/Makingsense/comments/' + this.id + '/'+ helper.random("tips_to", "make_the", "how_to") + '_' + helper.random("click", "jump");
     },
     score: '{{integer(1,10)}}',
-    createdAt: '{{date()}}'
+    createdAt: function () {
+      return new Date().getTime() - (Math.floor(Math.random() * 10000000000));
+    }
   }
 ]

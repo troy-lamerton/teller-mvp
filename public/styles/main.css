@@ -40,6 +40,9 @@ h1 {
 .green {
   color: green;
 }
+.highlight {
+  background-color: yellow;
+}
 
 .small-left {
   margin-left: 16px;

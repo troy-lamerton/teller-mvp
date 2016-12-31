@@ -17,3 +17,7 @@ Server ensures data is in a consistent format at all times. From initial fetchin
 the data to template for rendering.
 
 Templates just displays data, they are "dumb". --until further notice
+
+#### BUG
+Have to restart server to see changes in browser reflecting changes in raw.json file
+see hacky solution in views/renderPage.js
