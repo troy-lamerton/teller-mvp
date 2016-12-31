@@ -1,11 +1,10 @@
 # Data Filtering Tool
 
-## A web user interface for filtering a JSON array.
+A web user interface for filtering a JSON array.
+Give the app your JSON and array and start selecting what to keep and what to delete
 
-### Give the app your JSON and array and start selecting what to keep and what to delete
+### Installation
 
-#### Installation
-
-``` git clone <url>
-npm install 
-npm install -g nodemon``` 
+```git clone <url>```
+```npm install```
+```npm install -g nodemon``` 
