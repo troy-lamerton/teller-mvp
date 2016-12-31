@@ -8,9 +8,6 @@ const routes = require('./routes/index');
 
 const app = express();
 
-const dotenv = require('dotenv')
-dotenv.load()
-
 // view engine setup
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
