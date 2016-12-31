@@ -3,15 +3,22 @@ http://www.json-generator.com/
 [
   '{{repeat(7, 9)}}',
   {
-    __deleted: function () {
+    __hidden: function () {
+      return Math.random() < 0.3;
+    },
+    __marked: function () {
       return Math.random() < 0.3;
     },
     data: {
-      id: '{{objectId()}}',
+      id: function () {
+        return Math.random().toString(36).slice(2,8);
+      },
       title: '{{lorem(3, "words")}}',
       selftext: '{{lorem(2, "paragraphs")}}',
       author: '{{firstName()}}{{surname()}}',
-      url: 'https://www.reddit.com/r/Makingsense/comments/{{objectId()}}/{{random("tips_to", "make_the", "how_to")}}_{{random("click", "jump")}}/',
+      url: function (helper) {
+        return 'https://www.reddit.com/r/Makingsense/comments/' + this.id + '/'+ helper.random("tips_to", "make_the", "how_to") + '_' + helper.random("click", "jump");
+      },
       score: '{{integer(1,10)}}',
       createdAt: '{{date()}}'
     }

@@ -26,3 +26,17 @@ h1 {
   border-radius: 8px;
   border: 1px solid grey;
 }
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+
+.small-left {
+  margin-left: 16px;
+}

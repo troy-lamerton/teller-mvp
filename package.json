@@ -25,6 +25,7 @@
   "homepage": "https://github.com/troy-lamerton/express-demo#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "classnames": "^2.2.5",
     "express": "^4.14.0",
     "hbs": "^4.0.1",
     "livereload": "^0.6.0",

@@ -1,22 +1,15 @@
 const _ = require('lodash');
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
-const mainLayout = require('../views/layouts/main');
-const homeTemplate = require('../views/home');
+const render = require('../views/renderPage')
 
-const raw = require('../data/raw_test.json');
+const path = require('path');
+const dataPath = path.join(__dirname, '..', 'data');
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  const notDeletedItems = _.filter(raw, item => !item.__deleted);
-  res.send(mainLayout({
-    body: homeTemplate({
-      heading: 'Subtitle',
-      message: 'Render whatever into the template by passing information like this.',
-      dataArray: notDeletedItems,
-    })
-  }));
+router.get('/', (req, res) => {
+  res.send(render.home());
 });
 
-module.exports = router;
+module.exports = router

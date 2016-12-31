@@ -8,3 +8,12 @@ Give the app your JSON and array and start selecting what to keep and what to de
 ```git clone <url>```
 ```npm install```
 ```npm install -g nodemon``` 
+
+### Notes
+
+Seperation of concerns:
+
+Server ensures data is in a consistent format at all times. From initial fetching of data to giving
+the data to template for rendering.
+
+Templates just displays data, they are "dumb". --until further notice
