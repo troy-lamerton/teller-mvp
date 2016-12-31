@@ -22,7 +22,7 @@ function renderHomePage (raw) {
   const notHiddenItems = _.filter(rawData, item => !item.__hidden);
   return renderPage(
     homeTemplate({
-      dataArray: notHiddenItems,
+      posts: rawData,
     })
   )
 }
