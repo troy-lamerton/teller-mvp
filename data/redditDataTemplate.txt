@@ -1,0 +1,19 @@
+http://www.json-generator.com/
+
+[
+  '{{repeat(7, 9)}}',
+  {
+    __deleted: function () {
+      return Math.random() < 0.3;
+    },
+    data: {
+      id: '{{objectId()}}',
+      title: '{{lorem(3, "words")}}',
+      selftext: '{{lorem(2, "paragraphs")}}',
+      author: '{{firstName()}}{{surname()}}',
+      url: 'https://www.reddit.com/r/Makingsense/comments/{{objectId()}}/{{random("tips_to", "make_the", "how_to")}}_{{random("click", "jump")}}/',
+      score: '{{integer(1,10)}}',
+      createdAt: '{{date()}}'
+    }
+  }
+]

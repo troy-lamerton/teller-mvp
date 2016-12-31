@@ -3,4 +3,13 @@
 <div class="content">
   <h3 class="subtitle">{{heading}}</h3>
   <p>{{message}}</p>
+  <div>
+    {{#each dataArray}}
+      <div>
+        <a href="{{this.data.url}}">{{this.data.title}}</a>
+        <p>{{this.data.createdAt}}</p>
+        <p>{{this.data.selftext}}</p>
+      </div>
+    {{/each}}
+  </div>
 </div>
