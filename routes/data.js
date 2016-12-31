@@ -32,7 +32,7 @@ router.post('/:id/:method', (req, res) => {
   console.log(`Request to ${method} data with id "${id}"`)
   fs.readFile(path.join(dataPath, 'raw_test.json'), 'utf8', (err, text) => {
     const data = JSON.parse(text)
-    const itemIndex = _.findIndex(data, {data: {id: req.params.id}})
+    const itemIndex = _.findIndex(data, {id: req.params.id})
     if (data[itemIndex]) {
       switch (method) {
         case validMethods[0]:

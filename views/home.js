@@ -17,7 +17,7 @@ module.exports = ({heading, message, posts}) => (
           </span>
         </div>
         <div class="flex-row">
-          <span>${item.data.id}</span><span>${moment(item.data.createdAt).format('DD MMM YYYY h:mm a')}</span>
+          <span>${item.data.id}</span><span>${moment(new Date(item.data.createdAt)).format('DD MMM YYYY h:mm a')}</span>
         </div>
         <p>${item.data.selftext.slice(0, 188)}${item.data.selftext.length > 188 ? '...' : ''}</p>
       </div>`

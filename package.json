@@ -6,6 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "run-once": "node index.js",
+    "fetch-reddit": "node ./getRedditData",
+    "fetch": "npm run fetch-reddit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,7 +29,6 @@
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "express": "^4.14.0",
-    "hbs": "^4.0.1",
     "livereload": "^0.6.0",
     "lodash": "^4.17.3",
     "moment": "^2.17.1",
