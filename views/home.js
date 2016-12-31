@@ -10,16 +10,16 @@ module.exports = ({heading, message, posts}) => (
     ${_.map(posts, item => (
       `<div class="data-card">
         <div class="flex-row">
-          <a href="${item.data.url}">${item.data.title}</a>
+          <a href="${item.url}">${item.title}</a>
           <span class="flex-row">
             <span class="${cx({green: item.__marked, red: !item.__marked})}">${item.__marked ? 'Marked' : ''}</span>
             <span class="${cx('small-left', {green: !item.__hidden, red: item.__hidden})}">${item.__hidden ? 'Hidden' : 'Shown'}</span>
           </span>
         </div>
         <div class="flex-row">
-          <span>${item.data.id}</span><span>${moment(new Date(item.data.createdAt)).format('DD MMM YYYY h:mm a')}</span>
+          <span>${item.id}</span><span>${moment(new Date(item.createdAt)).format('DD MMM YYYY h:mm a')}</span>
         </div>
-        <p>${item.data.selftext.slice(0, 188)}${item.data.selftext.length > 188 ? '...' : ''}</p>
+        <p>${item.selftext.slice(0, 188)}${item.selftext.length > 188 ? '...' : ''}</p>
       </div>`
     )).join('')}
     </div>
