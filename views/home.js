@@ -4,10 +4,9 @@ const moment = require('moment')
 
 module.exports = ({heading, message, posts}) => (
 
-  `<h1>Reddit data filtering</h1>
+  `<h1 id="INCREMENT">Reddit data filtering</h1>
   <div class="content">
-    <div>
-    ${_.map(posts, item => (
+    <div store-posts>${_.map(posts, item => (
       `<div class="data-card">
         <div class="flex-row">
           <a href="${item.url}">${item.title}</a>

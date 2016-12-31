@@ -30,7 +30,7 @@ router.post('/:id/:method', (req, res) => {
     return
   }
   console.log(`Request to ${method} data with id "${id}"`)
-  fs.readFile(path.join(dataPath, 'raw_test.json'), 'utf8', (err, text) => {
+  fs.readFile(path.join(dataPath, 'raw.json'), 'utf8', (err, text) => {
     const data = JSON.parse(text)
     const itemIndex = _.findIndex(data, {id: req.params.id})
     if (data[itemIndex]) {
@@ -54,7 +54,7 @@ router.post('/:id/:method', (req, res) => {
           console.log('Updated item as NOT marked in array')
           break
       }
-      fs.writeFile(path.join(dataPath, 'raw_test.json'), JSON.stringify(data), (err) => {
+      fs.writeFile(path.join(dataPath, 'raw.json'), JSON.stringify(data), (err) => {
         if (err) {
           errorMessage = `Error saving data to disk.\nFull error message follows:\n${err}`
           console.error(errorMessage)
