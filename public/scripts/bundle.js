@@ -124,16 +124,24 @@ const _ = require('lodash')
 const createStore = require('redux').createStore
 const fromJS = require('immutable').fromJS
 const cx = require('classnames')
-const moment = require('moment')
+
+const Posts = require('../../views/components/Posts')
 
 const initialState = fromJS(window.__INITIAL_STATE__)
+const types = require('./types')
 
 function counter(state = initialState, action) {
   switch (action.type) {
-  case 'INCREMENT':
+  case types.INCREMENT:
     return state.set('count', state.get('count') + 1)
-  case 'DECREMENT':
-    return state.set('count', state.get('count') - 1)
+  case types.MARK_POST:
+    return state.setIn(['posts', action.index, '__marked'], true)
+  case types.UNMARK_POST:
+    return state.setIn(['posts', action.index, '__marked'], false)
+  case types.HIDE_POST:
+    return state.setIn(['posts', action.index, '__hidden'], true)
+  case types.UNHIDE_POST:
+    return state.setIn(['posts', action.index, '__hidden'], false)
   default:
     return state
   }
@@ -145,42 +153,42 @@ const store = createStore(counter)
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
 // However it can also be handy to persist the current state in the localStorage.
 
-store.dispatch({ type: 'INCREMENT' })
+store.dispatch({ type: types.INCREMENT })
 // 1
-store.dispatch({ type: 'INCREMENT' })
-// 2
 
 store.subscribe(() => {
   console.log('Current count:', store.getState().toJS().count)
   const posts = store.getState().get('posts').toJS()
-  document.querySelector('[store-posts]').innerHTML = (
-    _.map(posts, item => (
-      `<div class="data-card">
-        <div class="flex-row">
-          <a href="${item.url}" class="${cx({highlight: (/testimony/i).test(item.title)})}">${item.title}</a>
-          <span class="flex-row">
-            <span class="${cx({green: item.__marked, red: !item.__marked})}">${item.__marked ? 'Marked' : ''}</span>
-            <span class="${cx('small-left', {green: !item.__hidden, red: item.__hidden})}">${item.__hidden ? 'Hidden' : 'Shown'}</span>
-          </span>
-        </div>
-        <div class="flex-row">
-          <span>${item.id}</span><span>${moment(new Date(item.createdAt * 1000)).format('DD MMM YYYY h:mm a')}</span>
-        </div>
-        <p>${item.selftext.slice(0, 188)}${item.selftext.length > 188 ? '...' : ''}</p>
-      </div>`
-    )).join('')
-  )
+  document.querySelector('[store-posts]').innerHTML = Posts({posts})
 })
 
 window.onload = () => {
   document.getElementById('INCREMENT').onclick = () => {
-    store.dispatch({ type: 'INCREMENT' })
+    store.dispatch({ type: types.INCREMENT })
   }
+  const postsList = document.querySelector('[store-posts]')
+  postsList.childNodes.forEach(postNode => {
+    const newPostNode = postNode.cloneNode(true)
+    newPostNode.innerText = 'THIS IS P TAG' 
+    newPostNode.onclick = () => {
+      console.log('clicky')
+      store.dispatch({ type: types.MARK_POST })
+    }
+    postsList.replaceChild(newPostNode, postNode);
+  })
 }
 
 module.exports = store
 
-},{"classnames":3,"immutable":4,"lodash":15,"moment":16,"redux":22}],3:[function(require,module,exports){
+},{"../../views/components/Posts":28,"./types":3,"classnames":4,"immutable":5,"lodash":16,"redux":23}],3:[function(require,module,exports){
+module.exports = {
+  INCREMENT: 'INCREMENT',
+  MARK_POST: 'MARK_POST',
+  UNMARK_POST: 'UNMARK_POST',
+  HIDE_POST: 'HIDE_POST',
+  UNHIDE_POST: 'UNHIDE_POST',
+}
+},{}],4:[function(require,module,exports){
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -230,7 +238,7 @@ module.exports = store
 	}
 }());
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  *  Copyright (c) 2014-2015, Facebook, Inc.
  *  All rights reserved.
@@ -5210,7 +5218,7 @@ module.exports = store
   return Immutable;
 
 }));
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -5218,7 +5226,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":12}],6:[function(require,module,exports){
+},{"./_root":13}],7:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -5248,7 +5256,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":5,"./_getRawTag":9,"./_objectToString":10}],7:[function(require,module,exports){
+},{"./_Symbol":6,"./_getRawTag":10,"./_objectToString":11}],8:[function(require,module,exports){
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -5256,7 +5264,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var overArg = require('./_overArg');
 
 /** Built-in value references. */
@@ -5264,7 +5272,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
 
 module.exports = getPrototype;
 
-},{"./_overArg":11}],9:[function(require,module,exports){
+},{"./_overArg":12}],10:[function(require,module,exports){
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -5312,7 +5320,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":5}],10:[function(require,module,exports){
+},{"./_Symbol":6}],11:[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -5336,7 +5344,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Creates a unary function that invokes `func` with its argument transformed.
  *
@@ -5353,7 +5361,7 @@ function overArg(func, transform) {
 
 module.exports = overArg;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -5364,7 +5372,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":7}],13:[function(require,module,exports){
+},{"./_freeGlobal":8}],14:[function(require,module,exports){
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -5395,7 +5403,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     getPrototype = require('./_getPrototype'),
     isObjectLike = require('./isObjectLike');
@@ -5459,7 +5467,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"./_baseGetTag":6,"./_getPrototype":8,"./isObjectLike":13}],15:[function(require,module,exports){
+},{"./_baseGetTag":7,"./_getPrototype":9,"./isObjectLike":14}],16:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -22547,7 +22555,7 @@ module.exports = isPlainObject;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 //! moment.js
 //! version : 2.17.1
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -26850,7 +26858,7 @@ return hooks;
 
 })));
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -26909,7 +26917,7 @@ function applyMiddleware() {
     };
   };
 }
-},{"./compose":20}],18:[function(require,module,exports){
+},{"./compose":21}],19:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -26961,7 +26969,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators;
 }
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -27106,7 +27114,7 @@ function combineReducers(reducers) {
   };
 }
 }).call(this,require('_process'))
-},{"./createStore":21,"./utils/warning":23,"_process":1,"lodash/isPlainObject":14}],20:[function(require,module,exports){
+},{"./createStore":22,"./utils/warning":24,"_process":1,"lodash/isPlainObject":15}],21:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -27145,7 +27153,7 @@ function compose() {
     }, last.apply(undefined, arguments));
   };
 }
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -27407,7 +27415,7 @@ function createStore(reducer, preloadedState, enhancer) {
     replaceReducer: replaceReducer
   }, _ref2[_symbolObservable2['default']] = observable, _ref2;
 }
-},{"lodash/isPlainObject":14,"symbol-observable":24}],22:[function(require,module,exports){
+},{"lodash/isPlainObject":15,"symbol-observable":25}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -27456,7 +27464,7 @@ exports.bindActionCreators = _bindActionCreators2['default'];
 exports.applyMiddleware = _applyMiddleware2['default'];
 exports.compose = _compose2['default'];
 }).call(this,require('_process'))
-},{"./applyMiddleware":17,"./bindActionCreators":18,"./combineReducers":19,"./compose":20,"./createStore":21,"./utils/warning":23,"_process":1}],23:[function(require,module,exports){
+},{"./applyMiddleware":18,"./bindActionCreators":19,"./combineReducers":20,"./compose":21,"./createStore":22,"./utils/warning":24,"_process":1}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -27482,10 +27490,10 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports = require('./lib/index');
 
-},{"./lib/index":25}],25:[function(require,module,exports){
+},{"./lib/index":26}],26:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -27517,7 +27525,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill":26}],26:[function(require,module,exports){
+},{"./ponyfill":27}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27541,4 +27549,26 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}]},{},[2]);
+},{}],28:[function(require,module,exports){
+const _ = require('lodash');
+const cx = require('classnames')
+const moment = require('moment')
+
+module.exports = ({posts, markPost}) => (
+  _.map(posts, (item, index) => (
+    `<div class="data-card" onClick="${() => {console.log(12, markPost); markPost(index)}}">
+      <div class="flex-row">
+        <a href="${item.url}" class="${cx({highlight: (/testimony/i).test(item.title)})}">${item.title}</a>
+        <span class="flex-row">
+          <span class="${cx({green: item.__marked, red: !item.__marked})}">${item.__marked ? 'Marked' : ''}</span>
+          <span class="${cx('small-left', {green: !item.__hidden, red: item.__hidden})}">${item.__hidden ? 'Hidden' : 'Shown'}</span>
+        </span>
+      </div>
+      <div class="flex-row">
+        <span>${item.id}</span><span>${moment(new Date(item.createdAt * 1000)).format('DD MMM YYYY h:mm a')}</span>
+      </div>
+      <p>${item.selftext.slice(0, 188)}${item.selftext.length > 188 ? '...' : ''}</p>
+    </div>`
+  )).join('')
+)
+},{"classnames":4,"lodash":16,"moment":17}]},{},[2]);

@@ -2,16 +2,24 @@ const _ = require('lodash')
 const createStore = require('redux').createStore
 const fromJS = require('immutable').fromJS
 const cx = require('classnames')
-const moment = require('moment')
+
+const Posts = require('../../views/components/Posts')
 
 const initialState = fromJS(window.__INITIAL_STATE__)
+const types = require('./types')
 
 function counter(state = initialState, action) {
   switch (action.type) {
-  case 'INCREMENT':
+  case types.INCREMENT:
     return state.set('count', state.get('count') + 1)
-  case 'DECREMENT':
-    return state.set('count', state.get('count') - 1)
+  case types.MARK_POST:
+    return state.setIn(['posts', action.index, '__marked'], true)
+  case types.UNMARK_POST:
+    return state.setIn(['posts', action.index, '__marked'], false)
+  case types.HIDE_POST:
+    return state.setIn(['posts', action.index, '__hidden'], true)
+  case types.UNHIDE_POST:
+    return state.setIn(['posts', action.index, '__hidden'], false)
   default:
     return state
   }
@@ -23,37 +31,31 @@ const store = createStore(counter)
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
 // However it can also be handy to persist the current state in the localStorage.
 
-store.dispatch({ type: 'INCREMENT' })
+store.dispatch({ type: types.INCREMENT })
 // 1
-store.dispatch({ type: 'INCREMENT' })
-// 2
 
 store.subscribe(() => {
   console.log('Current count:', store.getState().toJS().count)
   const posts = store.getState().get('posts').toJS()
-  document.querySelector('[store-posts]').innerHTML = (
-    _.map(posts, item => (
-      `<div class="data-card">
-        <div class="flex-row">
-          <a href="${item.url}" class="${cx({highlight: (/testimony/i).test(item.title)})}">${item.title}</a>
-          <span class="flex-row">
-            <span class="${cx({green: item.__marked, red: !item.__marked})}">${item.__marked ? 'Marked' : ''}</span>
-            <span class="${cx('small-left', {green: !item.__hidden, red: item.__hidden})}">${item.__hidden ? 'Hidden' : 'Shown'}</span>
-          </span>
-        </div>
-        <div class="flex-row">
-          <span>${item.id}</span><span>${moment(new Date(item.createdAt * 1000)).format('DD MMM YYYY h:mm a')}</span>
-        </div>
-        <p>${item.selftext.slice(0, 188)}${item.selftext.length > 188 ? '...' : ''}</p>
-      </div>`
-    )).join('')
-  )
+  function markPost (index) {
+    store.dispatch()
+  }
+  document.querySelector('[store-posts]').innerHTML = Posts({posts, markPost})
 })
 
 window.onload = () => {
   document.getElementById('INCREMENT').onclick = () => {
-    store.dispatch({ type: 'INCREMENT' })
+    store.dispatch({ type: types.INCREMENT })
   }
+  const postsList = document.querySelector('[store-posts]')
+  postsList.childNodes.forEach((postNode, index) => {
+    const newPostNode = postNode.cloneNode(true)
+    newPostNode.onclick = () => {
+      console.log('clicky')
+      store.dispatch({ type: types.MARK_POST, index: index})
+    }
+    postsList.replaceChild(newPostNode, postNode);
+  })
 }
 
 module.exports = store
