@@ -4,8 +4,8 @@
   "description": "A simple express server with two routes and Handlebars templates",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "start": "nodemon index.js",
+    "run-once": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,10 +25,9 @@
   "homepage": "https://github.com/troy-lamerton/express-demo#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "dotenv": "^2.0.0",
     "express": "^4.14.0",
-    "express-handlebars": "^3.0.0",
     "hbs": "^4.0.1",
+    "livereload": "^0.6.0",
     "lodash": "^4.17.3",
     "nodemon": "^1.11.0",
     "redwrap": "0.0.4",
