@@ -1,8 +1,6 @@
-http://www.json-generator.com/
-
 [
   '{{repeat(7, 9)}}',
-  {
+  '{{objectId()}}': {
     __hidden: function () {
       return Math.random() < 0.3;
     },
