@@ -35,7 +35,7 @@
 				      <div class="flex-row flex-align-start">
 				        <!-- ).format('DD MMM YYYY h:mm a') -->
 				        <button class="post-expand" ng-click="">=</button>
-				        <span class="small-text post-submitted">Submitted <span title={{post.createdAtDate.toString()}}>{{post.createdAtDate | date : 'dd MMM yyyy'}}</span> by <span class="post-author">{{post.author}}</span></span>
+				        <span class="small-text post-submitted">Submitted <span title={{post.createdAtDate.toString()}}>{{post.createdAtDate | date : 'dd MMM yyyy'}}</span> by <span class="post-author" ng-click="setSearchQuery(post.author)">{{post.author}}</span></span>
 				      </div>
 						</div>
 						<form ng-submit="doneEditing(post)">

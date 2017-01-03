@@ -163,6 +163,10 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 		});
 	};
 
+	$scope.setSearchQuery = function (query) {
+    $scope.searchQuery = query;
+  }
+
 	$scope.search = function (post) {
     return (angular.lowercase(post.title).indexOf(angular.lowercase($scope.searchQuery) || '') !== -1 ||
       angular.lowercase(post.author).indexOf(angular.lowercase($scope.searchQuery) || '') !== -1);
