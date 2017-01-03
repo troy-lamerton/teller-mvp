@@ -7,19 +7,12 @@ body {
   font-family: Arial, sans-serif;
 }
 
-h1 {
-  font-size: 2.5em;
-}
-
 .content {
   width: 75%;
   min-height: 200px;
   padding: 8px 10px;
   border: 1px solid black;
   border-radius: 8px;
-}
-.subtitle {
-  margin: 5px 0;
 }
 
 .data-card {
@@ -41,10 +34,7 @@ h1 {
   justify-content: flex-start;
 }
 .red {
-  color: red;
-}
-.green {
-  color: green;
+  color: #db4343;
 }
 .highlight {
   background-color: yellow;

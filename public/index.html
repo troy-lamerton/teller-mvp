@@ -12,7 +12,8 @@
 			<header id="header">
 				<h1>MakingSense</h1>
 				<form id="post-form" ng-submit="addPost()">
-					<input id="new-post" type="url" placeholder="Import post by url" ng-model="newPostUrl" autofocus>
+					<input class="input" type="url" placeholder="Import post by url" ng-model="newPostUrl">
+					<input class="input" type="text" placeholder="Search posts" ng-model="searchPostsQuery" autofocus>
 				</form>
 			</header>
 			<section id="main" ng-show="totalCount" ng-cloak>
@@ -20,7 +21,7 @@
 					<li ng-repeat="(key, post) in posts | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
 						<div class="view data-card">
 				      <div class="flex-row">
-								<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" ng-dblclick="editPost(post)" ng-class="{'post-title': true, highlight: post.highlight}">{{post.title}}</a>
+								<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" --backup-ng-dblclick="editPost(post)" ng-class="{'post-title': true, highlight: post.highlight, red: post.hidden}">{{post.title}}</a>
 				        <div class="post-buttons">
 									<input class="toggle" type="checkbox" ng-model="post.marked" ng-change="posts.$save(post)">
 									<button class="destroy" ng-click="toggleHidden(post)" ng-right-click="removePost(post)" />
