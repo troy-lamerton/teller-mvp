@@ -8,11 +8,12 @@
  */
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray) {
 	var url = 'https://data-filtering-tool.firebaseio.com/posts';
-	var fireRef = new Firebase(url);
+	var fireRefMeta = new Firebase(url + '/meta')
+	var fireRefContent = new Firebase(url + '/content')
 
 	// Bind the todos to the firebase provider.
-	$scope.todos = $firebaseArray(fireRef);
-	$scope.newTodo = '';
+	$scope.todos = $firebaseArray(fireRefMeta);
+	$scope.newPostUrl = '';
 	$scope.editedTodo = null;
 
 	$scope.$watch('todos', function () {
@@ -36,15 +37,35 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	}, true);
 
 	$scope.addTodo = function () {
-		var newTodo = $scope.newTodo.trim();
-		if (!newTodo.length) {
+		var newPostUrl = $scope.newPostUrl
+		if (!newPostUrl.length) {
 			return;
 		}
+		var urlParts = newPostUrl.split('/');
+		var id = urlParts[urlParts.length-3]
+		var title = urlParts[urlParts.length-2];
+
+		var xhr = new XMLHttpRequest();
+		if (self.fetch) {
+			console.log('fetch supported')
+		} else {
+			console.error('fetch supported')
+		}
+		fetch(newPostUrl)
+			.then(function(res) {
+				console.info(res);
+			})
+			.catch(function (err) {
+				console.error('Error fetching reddit data', err);
+			})
+
 		$scope.todos.$add({
-			title: newTodo,
+			id,
+			title,
+			url: newPostUrl,
 			marked: false
 		});
-		$scope.newTodo = '';
+		$scope.newPostUrl = '';
 	};
 
 	$scope.editTodo = function (todo) {
@@ -54,9 +75,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 
 	$scope.doneEditing = function (todo) {
 		$scope.editedTodo = null;
-		var title = todo.title.trim();
+		var title = todo.title;
 		if (title) {
-			$scope.todos.$save();
+			$scope.todos.$save(todo);
 		} else {
 			$scope.removeTodo(todo);
 		}
@@ -82,7 +103,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	/*$scope.markAll = function (allCompleted) {
 		$scope.todos.forEach(function (todo) {
 			todo.marked = allCompleted;
-			$scope.todos.$save();
+			$scope.todos.$save(todo);
 		});
 	};*/
 

@@ -12,15 +12,15 @@
 			<header id="header">
 				<h1>posts</h1>
 				<form id="todo-form" ng-submit="addTodo()">
-					<input id="new-todo" type="url" placeholder="Import post by url" ng-model="newTodo" autofocus>
+					<input id="new-todo" type="text" placeholder="Import post by url" ng-model="newPostUrl" autofocus>
 				</form>
 			</header>
 			<section id="main" ng-show="totalCount" ng-cloak>
 				<ul id="todo-list">
-					<li ng-repeat="(id, todo) in todos | todoFilter" ng-class="{completed: todo.marked, editing: todo == editedTodo}">
+					<li ng-repeat="(key, todo) in todos | todoFilter" ng-class="{completed: todo.marked, editing: todo == editedTodo}">
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="todo.marked" ng-change="todos.$save(todo)">
-							<label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
+							<a href="{{todo.url}}" target="_blank" rel="noopener" ng-dblclick="editTodo(todo)">{{todo.title}}</a>
 							<button class="destroy" ng-click="removeTodo(todo)"></button>
 						</div>
 						<form ng-submit="doneEditing(todo)">
