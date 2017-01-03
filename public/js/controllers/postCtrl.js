@@ -6,14 +6,14 @@
  * - retrieves and persists the model via the $firebaseObject service
  * - exposes the model to the template and provides event handlers
  */
-postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray) {
+postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray, $firebaseObject) {
 	const url = 'https://data-filtering-tool.firebaseio.com/posts';
 	const fireRefMeta = new Firebase(url + '/meta')
 	const fireRefContent = new Firebase(url + '/content')
 
 	// Bind the posts to the firebase provider.
 	$scope.posts = $firebaseArray(fireRefMeta);
-	$scope.postsContent = $firebaseArray(fireRefContent);
+	$scope.postsContent = $firebaseObject(fireRefContent);
 	$scope.newPostUrl = '';
 	$scope.editedPost = null;
 
@@ -35,8 +35,7 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 			post.createdAtDate = new Date(post.createdAt * 1000)
 			const lowerCaseTitle = post.title.toLowerCase()
 			if (lowerCaseTitle.indexOf('testimon') > -1 || lowerCaseTitle.indexOf('clicking') > -1) {
-				console.log(lowerCaseTitle)
-				// post.highlight = true;
+				post.highlighted = true;
 			}
 		});
 		$scope.totalCount = total;
@@ -150,6 +149,8 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 
 	$scope.removePost = function (post) {
 		$scope.posts.$remove(post);
+		delete $scope.postsContent[post.id];
+		$scope.postsContent.$save();
 	};
 
 	$scope.clearCompletedPosts = function () {
