@@ -17,9 +17,20 @@
 			<section id="main" ng-show="totalCount" ng-cloak>
 				<ul id="post-list">
 					<li ng-repeat="(key, post) in posts | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
-						<div class="view">
-							<input class="toggle" type="checkbox" ng-model="post.marked" ng-change="posts.$save(post)">
-							<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" ng-dblclick="editPost(post)">{{post.title}}</a>
+						<div class="view data-card">
+				      <div class="flex-row">
+								<input class="toggle" type="checkbox" ng-model="post.marked" ng-change="posts.$save(post)">
+								<a ng-href="{!post.marked ? post.url : ''}" target="_blank" rel="noopener" ng-dblclick="editPost(post)" ng-class="{highlight: (/testimony/i).test(post.title)}">{{post.title}}</a>
+				        <span class="flex-row">
+				          <span ng-class="{green: post.marked, red: !post.marked}">{{post.marked ? 'Marked' : ''}}</span>
+				          <span ng-class="{'small-left': true, green: !post.hidden, red: post.hidden}">{{post.hidden ? 'Hidden' : 'Shown'}}</span>
+				        </span>
+				      </div>
+				      <div class="flex-row">
+				        <span>{{post.id}</span><span>{{new Date(post.createdAt * 1000) | date : 'DD MMM YYYY h:mm a'}}</span>
+				        <!-- ).format('DD MMM YYYY h:mm a') -->
+				      </div>
+				      <p>{{post.selftext.slice(0, 30)}}{{post.selftext.length > 188 ? '...' : ''}}</p>
 							<button class="destroy" ng-click="removePost(post)"></button>
 						</div>
 						<form ng-submit="doneEditing(post)">
