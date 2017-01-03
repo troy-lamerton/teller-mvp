@@ -6,7 +6,7 @@
  * - retrieves and persists the model via the $firebaseObject service
  * - exposes the model to the template and provides event handlers
  */
-postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray, $firebaseObject) {
+postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray, $firebaseObject, $filter) {
 	const url = 'https://data-filtering-tool.firebaseio.com/posts';
 	const fireRefMeta = new Firebase(url + '/meta')
 	const fireRefContent = new Firebase(url + '/content')
@@ -34,7 +34,9 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 			// note that date is in UTC timezone but browser displays it as user's timezone
 			post.createdAtDate = new Date(post.createdAt * 1000)
 			const lowerCaseTitle = post.title.toLowerCase()
-			if (lowerCaseTitle.indexOf('testimon') > -1 || lowerCaseTitle.indexOf('clicking') > -1) {
+			if (lowerCaseTitle.indexOf('testimon') > -1
+				|| lowerCaseTitle.indexOf('clicking') > -1
+				|| lowerCaseTitle.indexOf('clicked') > -1) {
 				post.highlighted = true;
 			}
 		});
@@ -161,12 +163,34 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 		});
 	};
 
-	/*$scope.markAll = function (allCompleted) {
-		$scope.posts.forEach(function (post) {
-			post.marked = allCompleted;
+	function filterPosts(posts) {
+		let filteredPosts = $filter('filter')(posts, {title: $scope.searchQuery});
+		filteredPosts = $filter('postFilter', $location)(filteredPosts);
+		return filteredPosts;
+	}
+
+	$scope.resetCheckboxes = function () {
+		$scope.allChecked = false;
+		$scope.allHidden = false;
+	}
+
+	$scope.markAll = function (allMarked) {
+		const filteredPosts = filterPosts($scope.posts);
+		console.log('Set marked to:', allMarked, Object.keys(filteredPosts).length)
+		/*angular.forEach(filteredPosts, function (post) {
+			post.marked = allMarked;
+			$scope.posts.$save(post);
+		});*/
+	};
+
+	$scope.hideAll = function (allHidden) {
+		const filteredPosts = filterPosts($scope.posts);
+		console.log('Set hidden to:', allHidden, Object.keys(filteredPosts).length)
+		angular.forEach(filteredPosts, function (post) {
+			post.hidden = allHidden;
 			$scope.posts.$save(post);
 		});
-	};*/
+	};
 
 	if ($location.path() === '') {
 		$location.path('/');

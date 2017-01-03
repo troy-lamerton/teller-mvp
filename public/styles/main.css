@@ -1,5 +1,4 @@
 body {
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
 
@@ -8,7 +7,7 @@ body {
 }
 
 .content {
-  width: 75%;
+  width: 95%;
   min-height: 200px;
   padding: 8px 10px;
   border: 1px solid black;
@@ -33,6 +32,41 @@ body {
 .flex-align-start {
   justify-content: flex-start;
 }
+.flex-align-end {
+  justify-content: flex-end;
+}
+.checkboxes {
+  max-height: none;
+  padding-right: 5px;
+}
+.toggle-all {
+  text-align: right;
+  color: grey;
+}
+.checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid grey;
+  border-radius: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 24px;
+  height: 24px;
+  padding: 1px;
+}
+.checkbox-markall {
+  background-color: #d5edd5;
+}
+.checkbox-markall:checled {
+  background-color: green;
+}
+.checkbox-hideall {
+  background-color: #ead3d3;
+}
+.checkbox-hideall:checked {
+  background-color: #db4343;
+}
+
 .red {
   color: #db4343;
 }
@@ -42,6 +76,9 @@ body {
 
 .post-title {
   font-size: 13.5pt;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .post-buttons {
   display: flex;

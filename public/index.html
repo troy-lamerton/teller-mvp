@@ -13,7 +13,12 @@
 				<h1>MakingSense</h1>
 				<form id="post-form" ng-submit="addPost()">
 					<input class="input" type="url" placeholder="Import post by url" ng-model="newPostUrl">
-					<input class="input" type="text" placeholder="Search titles" ng-model="searchQuery" autofocus>
+					<input class="input" type="text" placeholder="Search titles" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
+					<div class="flex-row flex-align-end checkboxes">
+						<label class="input toggle-all">Toggle all:</label>
+						<input class="checkbox checkbox-markall" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
+						<input class="checkbox checkbox-hideall" type="checkbox" ng-model="allHidden" ng-click="hideAll(allHidden)">
+					<div>
 				</form>
 			</header>
 			<section id="main" ng-show="totalCount" ng-cloak>
