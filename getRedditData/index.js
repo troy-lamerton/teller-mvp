@@ -3,15 +3,35 @@ const path = require('path');
 const fs = require('fs');
 const reddit = require('redwrap');
 
-// fetch every recent post up until this historical post
-const finalPostId = '57ud9o';
+const outputPath = '/data/raw.json';
+const fullDataPath = path.join(__dirname, '..', outputPath);
+
+// read raw json file to find most recent post fetched
+let currentRawJSON;
+let currentRawData;
+let newestPost;
+let finalPostId = '57tfsu';
+if (fs.existsSync(fullDataPath)) {
+  currentRawJSON = fs.readFileSync(path.join(__dirname, '..', outputPath), 'utf8', err => {
+    if (err) console.error('Error reading raw JSON file, proceeding with default finalPostId');
+  });
+
+  // fetch every recent post up to and including this historical post
+  //'57ud9o' is the first click testimony posted on r/makingsense
+  //'57tfsu' is the post before the first click testimony posted on r/makingsense
+  currentRawData = JSON.parse(currentRawJSON);
+  newestPost = currentRawData.fetch.newestPost;
+  finalPostId = newestPost;
+}
 
 reddit.r('MakingSense').sort('new').all(res => {
   function stopFetching () {
     res.emit('end');
   }
 
-  let totalData = []
+  let totalData = [];
+  const updatedAt = Date.now();
+  let newestPost = null; // id of newest post fetched
   res.on('data', function(data, res) {
     let moreData = data.data.children.filter(post => !post.data.stickied);
     // keep only the data I will use to display the post
@@ -34,7 +54,7 @@ reddit.r('MakingSense').sort('new').all(res => {
     if (finalPostIndex > -1) {
       const finalPost = moreData[finalPostIndex];
       console.log(`Final post '${finalPost.title}' (id: ${finalPost.id}) reached`);
-      moreData.splice(finalPostIndex + 1);
+      moreData.splice(finalPostIndex);
       totalData = totalData.concat(moreData);
       console.log('Total posts:', totalData.length);
       stopFetching();
@@ -49,29 +69,41 @@ reddit.r('MakingSense').sort('new').all(res => {
   });
 
   res.on('end', function(){
+    if (totalData.length === 0) {
+      console.log('No new posts');
+      process.exit();
+    }
     console.log('End', 'Total posts:', totalData.length);
+    const fetchData = {
+      fetch: {
+        newestPost: totalData[0].id,
+        updatedAt
+      }
+    };
 
     // split posts array into post meta-data and post content
     // this is to improve performance of the database that this data will go into 
-    const postsMeta = [];
+    const postsMetaArray = [];
     const postsContent = {};
+    // data about current run to include in the JSON output
     totalData.forEach(post => {
       const { selftext, id } = post;
       const postContent = {id, selftext};
       delete post.selftext;
       const postMeta = _.assign({hidden: false, marked: false}, post);
 
-      postsMeta.push(postMeta)
+      postsMetaArray.push(postMeta)
       postsContent[post.id] = postContent;
     })
 
-    const postsObject = {
+    const postsObject = _.assign(fetchData, {
       posts: {
-        postsMeta,
-        postsContent
+        meta: postsMetaArray.concat(currentRawData ? currentRawData.posts.meta : []),
+        content: _.assign(postsContent, currentRawData ? currentRawData.posts.content : {})
       }
-    };
-    fs.writeFile(path.join(__dirname, '..', '/data/raw.json'), JSON.stringify(postsObject), err => {
+    });
+
+    fs.writeFile(path.join(__dirname, '..', outputPath), JSON.stringify(postsObject), err => {
       if (err) console.error(err)
       else console.log('Great success! All data saved')
       process.exit();
