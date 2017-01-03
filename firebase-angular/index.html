@@ -1,36 +1,36 @@
 <!doctype html>
-<html lang="en" ng-app="todomvc" data-framework="firebase">
+<html lang="en" ng-app="postmvc" data-framework="firebase">
 	<head>
 		<meta charset="utf-8">
-		<title>Firebase &amp; AngularJS • TodoMVC</title>
-		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
-		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<title>Firebase &amp; AngularJS • PostMVC</title>
+		<link rel="stylesheet" href="node_modules/postmvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/postmvc-app-css/index.css">
 		<style>[ng-cloak] { display: none; }</style>
 	</head>
 	<body>
-		<section id="todoapp" ng-controller="TodoCtrl">
+		<section id="postapp" ng-controller="PostCtrl">
 			<header id="header">
 				<h1>posts</h1>
-				<form id="todo-form" ng-submit="addTodo()">
-					<input id="new-todo" type="text" placeholder="Import post by url" ng-model="newPostUrl" autofocus>
+				<form id="post-form" ng-submit="addPost()">
+					<input id="new-post" type="text" placeholder="Import post by url" ng-model="newPostUrl" autofocus>
 				</form>
 			</header>
 			<section id="main" ng-show="totalCount" ng-cloak>
-				<ul id="todo-list">
-					<li ng-repeat="(key, todo) in todos | todoFilter" ng-class="{completed: todo.marked, editing: todo == editedTodo}">
+				<ul id="post-list">
+					<li ng-repeat="(key, post) in posts | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
 						<div class="view">
-							<input class="toggle" type="checkbox" ng-model="todo.marked" ng-change="todos.$save(todo)">
-							<a href="{{todo.url}}" target="_blank" rel="noopener" ng-dblclick="editTodo(todo)">{{todo.title}}</a>
-							<button class="destroy" ng-click="removeTodo(todo)"></button>
+							<input class="toggle" type="checkbox" ng-model="post.marked" ng-change="posts.$save(post)">
+							<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" ng-dblclick="editPost(post)">{{post.title}}</a>
+							<button class="destroy" ng-click="removePost(post)"></button>
 						</div>
-						<form ng-submit="doneEditing(todo)">
-							<input class="edit" ng-model="todo.title" todo-escape="revertEditing(todo)" todo-blur="doneEditing(todo)" todo-focus="todo == editedTodo">
+						<form ng-submit="doneEditing(post)">
+							<input class="edit" ng-model="post.title" post-escape="revertEditing(post)" post-blur="doneEditing(post)" post-focus="post == editedPost">
 						</form>
 					</li>
 				</ul>
 			</section>
 			<footer id="footer" ng-show="totalCount" ng-cloak>
-				<span id="todo-count"><strong>{{remainingCount}}</strong>
+				<span id="post-count"><strong>{{remainingCount}}</strong>
 					<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
 				</span>
 				<ul id="filters">
@@ -44,21 +44,20 @@
 						<a ng-class="{selected: location.path() == '/marked'}" href="#/marked">Marked</a>
 					</li>
 				</ul>
-				<button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
+				<button id="clear-completed" ng-click="clearCompletedPosts()" ng-show="completedCount">Clear completed</button>
 			</footer>
 		</section>
 		<footer id="info">
-			<p>Double-click to edit a todo</p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+			<p>Double-click to edit a post</p>
 		</footer>
 		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-		<script src="node_modules/todomvc-common/base.js"></script>
+		<script src="node_modules/postmvc-common/base.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 		<script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
 		<script src="js/app.js"></script>
-		<script src="js/controllers/todoCtrl.js"></script>
-		<script src="js/directives/todoFocus.js"></script>
-		<script src="js/directives/todoBlur.js"></script>
-		<script src="js/directives/todoEscape.js"></script>
+		<script src="js/controllers/postCtrl.js"></script>
+		<script src="js/directives/postFocus.js"></script>
+		<script src="js/directives/postBlur.js"></script>
+		<script src="js/directives/postEscape.js"></script>
 	</body>
 </html>

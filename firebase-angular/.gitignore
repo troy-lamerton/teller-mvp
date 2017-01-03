@@ -5,9 +5,9 @@ node_modules/angularfire/*
 node_modules/angularfire/dist/*
 !node_modules/angularfire/dist/angularfire.js
 
-node_modules/todomvc-app-css/*
-!node_modules/todomvc-app-css/index.css
+node_modules/postmvc-app-css/*
+!node_modules/postmvc-app-css/index.css
 
-node_modules/todomvc-common/*
-!node_modules/todomvc-common/base.css
-!node_modules/todomvc-common/base.js
+node_modules/postmvc-common/*
+!node_modules/postmvc-common/base.css
+!node_modules/postmvc-common/base.js

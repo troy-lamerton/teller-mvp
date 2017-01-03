@@ -3,27 +3,27 @@
 'use strict';
 
 /**
- * The main TodoMVC app module
+ * The main PostMVC app module
  *
  * @type {angular.Module}
  */
-var todomvc = angular.module('todomvc', ['firebase']);
+var postmvc = angular.module('postmvc', ['firebase']);
 
-todomvc.filter('todoFilter', function ($location) {
+postmvc.filter('postFilter', function ($location) {
 	return function (input) {
 		var filtered = {};
-		angular.forEach(input, function (todo, id) {
+		angular.forEach(input, function (post, id) {
 			var path = $location.path();
 			if (path === '/active') {
-				if (!todo.hidden) {
-					filtered[id] = todo;
+				if (!post.hidden) {
+					filtered[id] = post;
 				}
 			} else if (path === '/marked') {
-				if (todo.marked) {
-					filtered[id] = todo;
+				if (post.marked) {
+					filtered[id] = post;
 				}
 			} else {
-				filtered[id] = todo;
+				filtered[id] = post;
 			}
 		});
 		return filtered;

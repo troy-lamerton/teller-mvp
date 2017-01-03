@@ -1,4 +1,4 @@
-/*global todomvc, angular, Firebase */
+/*global postmvc, angular, Firebase */
 'use strict';
 
 /**
@@ -6,27 +6,27 @@
  * - retrieves and persists the model via the $firebaseObject service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray) {
+postmvc.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray) {
 	var url = 'https://data-filtering-tool.firebaseio.com/posts';
 	var fireRefMeta = new Firebase(url + '/meta')
 	var fireRefContent = new Firebase(url + '/content')
 
-	// Bind the todos to the firebase provider.
-	$scope.todos = $firebaseArray(fireRefMeta);
+	// Bind the posts to the firebase provider.
+	$scope.posts = $firebaseArray(fireRefMeta);
 	$scope.newPostUrl = '';
-	$scope.editedTodo = null;
+	$scope.editedPost = null;
 
-	$scope.$watch('todos', function () {
+	$scope.$watch('posts', function () {
 		var total = 0;
 		var remaining = 0;
-		angular.forEach($scope.todos, function (todo) {
+		angular.forEach($scope.posts, function (post) {
 			// Skip invalid entries so they don't break the entire app.
-			if (!todo || !todo.title) {
+			if (!post || !post.title) {
 				return;
 			}
 
 			total++;
-			if (todo.marked === false) {
+			if (post.marked === false) {
 				remaining++;
 			}
 		});
@@ -36,7 +36,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		$scope.allChecked = remaining === 0;
 	}, true);
 
-	$scope.addTodo = function () {
+	$scope.addPost = function () {
 		var newPostUrl = $scope.newPostUrl
 		if (!newPostUrl.length) {
 			return;
@@ -57,9 +57,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			})
 			.catch(function (err) {
 				console.error('Error fetching reddit data', err);
-			})
+			});
 
-		$scope.todos.$add({
+		$scope.posts.$add({
 			id,
 			title,
 			url: newPostUrl,
@@ -68,42 +68,42 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		$scope.newPostUrl = '';
 	};
 
-	$scope.editTodo = function (todo) {
-		$scope.editedTodo = todo;
-		$scope.originalTodo = angular.extend({}, $scope.editedTodo);
+	$scope.editPost = function (post) {
+		$scope.editedPost = post;
+		$scope.originalPost = angular.extend({}, $scope.editedPost);
 	};
 
-	$scope.doneEditing = function (todo) {
-		$scope.editedTodo = null;
-		var title = todo.title;
+	$scope.doneEditing = function (post) {
+		$scope.editedPost = null;
+		var title = post.title;
 		if (title) {
-			$scope.todos.$save(todo);
+			$scope.posts.$save(post);
 		} else {
-			$scope.removeTodo(todo);
+			$scope.removePost(post);
 		}
 	};
 
-	$scope.revertEditing = function (todo) {
-		todo.title = $scope.originalTodo.title;
-		$scope.doneEditing(todo);
+	$scope.revertEditing = function (post) {
+		post.title = $scope.originalPost.title;
+		$scope.doneEditing(post);
 	};
 
-	$scope.removeTodo = function (todo) {
-		$scope.todos.$remove(todo);
+	$scope.removePost = function (post) {
+		$scope.posts.$remove(post);
 	};
 
-	$scope.clearCompletedTodos = function () {
-		$scope.todos.forEach(function (todo) {
-			if (todo.marked) {
-				$scope.removeTodo(todo);
+	$scope.clearCompletedPosts = function () {
+		$scope.posts.forEach(function (post) {
+			if (post.marked) {
+				$scope.removePost(post);
 			}
 		});
 	};
 
 	/*$scope.markAll = function (allCompleted) {
-		$scope.todos.forEach(function (todo) {
-			todo.marked = allCompleted;
-			$scope.todos.$save(todo);
+		$scope.posts.forEach(function (post) {
+			post.marked = allCompleted;
+			$scope.posts.$save(post);
 		});
 	};*/
 
