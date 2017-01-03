@@ -163,8 +163,15 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 		});
 	};
 
+	$scope.search = function (post) {
+    return (angular.lowercase(post.title).indexOf(angular.lowercase($scope.searchQuery) || '') !== -1 ||
+      angular.lowercase(post.author).indexOf(angular.lowercase($scope.searchQuery) || '') !== -1);
+  };
+
 	function filterPosts(posts) {
-		let filteredPosts = $filter('filter')(posts, {title: $scope.searchQuery});
+		let filteredPosts = posts.filter(post => $scope.search(post));
+		// let filteredPosts = $filter('filter')(posts, {title: $scope.searchQuery});
+		console.log('author or title search filter', filteredPosts)
 		filteredPosts = $filter('postFilter', $location)(filteredPosts);
 		return filteredPosts;
 	}
@@ -177,10 +184,10 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 	$scope.markAll = function (allMarked) {
 		const filteredPosts = filterPosts($scope.posts);
 		console.log('Set marked to:', allMarked, Object.keys(filteredPosts).length)
-		/*angular.forEach(filteredPosts, function (post) {
+		angular.forEach(filteredPosts, function (post) {
 			post.marked = allMarked;
 			$scope.posts.$save(post);
-		});*/
+		});
 	};
 
 	$scope.hideAll = function (allHidden) {

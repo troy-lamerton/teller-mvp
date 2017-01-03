@@ -23,7 +23,7 @@
 			</header>
 			<section id="main" ng-show="totalCount" ng-cloak>
 				<ul id="post-list">
-					<li ng-repeat="post in posts | filter : {title: searchQuery} | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
+					<li ng-repeat="post in posts | filter : search || {author: searchQuery} | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
 						<div class="view data-card">
 				      <div class="flex-row">
 								<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" --backup-ng-dblclick="editPost(post)" ng-class="{'post-title': true, highlighted: post.highlighted, red: post.hidden}">{{post.title}}</a>

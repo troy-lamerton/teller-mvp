@@ -57,7 +57,7 @@ body {
 .checkbox-markall {
   background-color: #d5edd5;
 }
-.checkbox-markall:checled {
+.checkbox-markall:checked {
   background-color: green;
 }
 .checkbox-hideall {
