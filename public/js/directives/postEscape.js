@@ -1,11 +1,11 @@
-/*global postmvc */
+/*global postchooser */
 'use strict';
 
 /**
  * Directive that executes an expression when the element it is applied to gets
  * an `escape` keydown event.
  */
-postmvc.directive('postEscape', function () {
+postchooser.directive('postEscape', function () {
 	var ESCAPE_KEY = 27;
 	return function (scope, elem, attrs) {
 		elem.bind('keydown', function (event) {

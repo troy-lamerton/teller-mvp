@@ -46,7 +46,6 @@ input[type="checkbox"] {
 
 #postapp {
 	background: #fff;
-	margin: 130px 0 40px 0;
 	position: relative;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
 	            0 25px 50px 0 rgba(0, 0, 0, 0.1);
@@ -71,10 +70,9 @@ input[type="checkbox"] {
 }
 
 #postapp h1 {
-	position: absolute;
-	top: -155px;
 	width: 100%;
-	font-size: 100px;
+	margin: 20px 0;
+	font-size: 80px;
 	font-weight: 100;
 	text-align: center;
 	color: rgba(175, 47, 47, 0.15);
@@ -150,7 +148,7 @@ label[for='toggle-all'] {
 
 #post-list li {
 	position: relative;
-	font-size: 24px;
+	font-size: 20px;
 	border-bottom: 1px solid #ededed;
 }
 
@@ -179,10 +177,6 @@ label[for='toggle-all'] {
 	width: 40px;
 	/* auto, since non-WebKit browsers doesn't support input styling */
 	height: auto;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	margin: auto 0;
 	border: none; /* Mobile Safari */
 	-webkit-appearance: none;
 	appearance: none;
@@ -196,14 +190,20 @@ label[for='toggle-all'] {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
-#post-list li a {
+#post-list li .title {
 	white-space: pre-line;
 	word-break: break-all;
-	padding: 15px 60px 15px 15px;
-	margin-left: 45px;
+	padding: 15px 60px 15px 0;
+	margin-left: 18px;
 	display: block;
 	line-height: 1.2;
-	transition: color 0.4s;
+	transition: color 0.2s;
+}
+
+#post-list li .post-row > * {
+  padding-left: 0;
+  margin-left: 18px;
+  display: block;
 }
 
 #post-list li.completed a {
@@ -212,17 +212,16 @@ label[for='toggle-all'] {
 }
 
 #post-list li .destroy {
-	display: none;
-	position: absolute;
-	top: 0;
+	display: inline-block;
+	opacity: 0;
 	right: 10px;
+	top: 0;
 	bottom: 0;
 	width: 40px;
 	height: 40px;
 	margin: auto 0;
 	font-size: 30px;
 	color: #cc9a9a;
-	margin-bottom: 11px;
 	transition: color 0.2s ease-out;
 }
 
@@ -235,7 +234,7 @@ label[for='toggle-all'] {
 }
 
 #post-list li:hover .destroy {
-	display: block;
+	opacity: 1;
 }
 
 #post-list li .edit {

@@ -1,4 +1,4 @@
-/*global postmvc, angular, Firebase */
+/*global postchooser, angular, Firebase */
 'use strict';
 
 /**
@@ -6,7 +6,7 @@
  * - retrieves and persists the model via the $firebaseObject service
  * - exposes the model to the template and provides event handlers
  */
-postmvc.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray) {
+postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray) {
 	const url = 'https://data-filtering-tool.firebaseio.com/posts';
 	const fireRefMeta = new Firebase(url + '/meta')
 	const fireRefContent = new Firebase(url + '/content')
@@ -27,8 +27,16 @@ postmvc.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArr
 			}
 
 			total++;
-			if (post.marked === false) {
+			if (post.marked === false && post.hidden === false) {
 				remaining++;
+			}
+			// convert createdAt to a date object
+			// note that date is in UTC timezone but browser displays it as user's timezone
+			post.createdAtDate = new Date(post.createdAt * 1000)
+			const lowerCaseTitle = post.title.toLowerCase()
+			if (lowerCaseTitle.indexOf('testimon') > -1 || lowerCaseTitle.indexOf('clicking') > -1) {
+				console.log(lowerCaseTitle)
+				// post.highlight = true;
 			}
 		});
 		$scope.totalCount = total;
@@ -133,6 +141,11 @@ postmvc.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArr
 	$scope.revertEditing = function (post) {
 		post.title = $scope.originalPost.title;
 		$scope.doneEditing(post);
+	};
+
+	$scope.toggleHidden = function (post) {
+		post.hidden = !post.hidden;
+		$scope.posts.$save(post);
 	};
 
 	$scope.removePost = function (post) {

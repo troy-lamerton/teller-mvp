@@ -26,7 +26,7 @@ Get help from other AngularJS users:
 * [Firebase on Facebook](https://facebook.com/Firebase)
 * [Firebase on Google +](https://plus.google.com/115330003035930967645/posts)
 
-_If you have other helpful links to share, or find any of the links above no longer work, please [let us know](https://github.com/tastejs/postmvc/issues)._
+_If you have other helpful links to share, or find any of the links above no longer work, please [let us know](https://github.com/tastejs/postchooser/issues)._
 
 ## Implementation
 

@@ -3,7 +3,8 @@ body {
   margin-left: auto;
   margin-right: auto;
 
-  font-family: verdana, sans-serif;
+  line-height: normal;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
@@ -24,8 +25,9 @@ h1 {
 .data-card {
   margin-bottom:10px;
   padding: 8px 10px;
+  padding-left: 15px;
   border-radius: 8px;
-  border: 1px solid grey;
+  border: 1px solid #d3d3d3;
 }
 .data-card:last-of-type {
   margin-bottom: 0px;
@@ -33,6 +35,10 @@ h1 {
 .flex-row {
   display: flex;
   justify-content: space-between;
+  max-height: 24px;
+}
+.flex-align-start {
+  justify-content: flex-start;
 }
 .red {
   color: red;
@@ -44,6 +50,42 @@ h1 {
   background-color: yellow;
 }
 
-.small-left {
-  margin-left: 16px;
+.post-title {
+  font-size: 13.5pt;
+}
+.post-buttons {
+  display: flex;
+  flex-spacing: space-between;
+  align-items: center
+}
+
+.post-expand {
+  width: 18px;
+  height: 18px;
+  font-size: 13px;
+  color: black;
+  border-radius: 2px;
+  border: 1px solid #e9e9e9;
+}
+.post-expand:hover {
+  background-color: #24a0ed;
+  color: white;
+}
+.post-submitted {
+  line-height: 18px;
+  vertical-align: middle;
+  color: #98abba;
+  margin-left: 5px;
+}
+
+.post-author {
+  color: black;
+}
+.post-author:hover {
+  color: #24a0ed;
+}
+
+
+.small-text {
+  font-size: 0.65em;
 }

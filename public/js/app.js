@@ -7,19 +7,23 @@
  *
  * @type {angular.Module}
  */
-var postmvc = angular.module('postmvc', ['firebase']);
+var postchooser = angular.module('postchooser', ['firebase']);
 
-postmvc.filter('postFilter', function ($location) {
+postchooser.filter('postFilter', function ($location) {
 	return function (input) {
 		var filtered = {};
+		var path = $location.path();
 		angular.forEach(input, function (post, id) {
-			var path = $location.path();
-			if (path === '/active') {
-				if (!post.hidden) {
+			if (path === '/unfiled') {
+				if (!post.marked && !post.hidden) {
 					filtered[id] = post;
 				}
 			} else if (path === '/marked') {
 				if (post.marked) {
+					filtered[id] = post;
+				}
+			} else if (path === '/hidden') {
+				if (post.hidden) {
 					filtered[id] = post;
 				}
 			} else {
