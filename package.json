@@ -26,6 +26,8 @@
   },
   "homepage": "https://github.com/troy-lamerton/data-filtering-tool#readme",
   "dependencies": {
-    "moment": "^2.17.1"
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "redwrap": "0.0.4"
   }
 }
