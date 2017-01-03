@@ -1,24 +1,29 @@
-[
-  '{{repeat(7, 9)}}',
-  '{{objectId()}}': {
-    __hidden: function () {
-      return Math.random() < 0.3;
+{
+  posts: {
+    meta: function (h) {
+      const metaArray = [];
+      return ['agh675', 'afr789', '2345tt', 'as67gt'].map(postId => {
+        return {
+          hidden: Math.random() < 0.3,
+          marked: Math.random() < 0.3,
+          id: Math.random().toString(36).slice(2,8),
+          title: h.lorem(3, "words"),
+          author: `${h.firstName()}${h.surname()}`,
+          url: 'https://www.reddit.com/r/Makingsense/comments/' + postId + '/'+ h.random("tips_to", "make_the", "how_to") + '_' + h.random("click", "jump"),
+          score: h.integer(1,10),
+          createdAt: new Date().getTime() - (Math.floor(Math.random() * 10000000000))
+        }
+      });
     },
-    __marked: function () {
-      return Math.random() < 0.3;
-    },
-    id: function () {
-      return Math.random().toString(36).slice(2,8);
-    },
-    title: '{{lorem(3, "words")}}',
-    selftext: '{{lorem(2, "paragraphs")}}',
-    author: '{{firstName()}}{{surname()}}',
-    url: function (helper) {
-      return 'https://www.reddit.com/r/Makingsense/comments/' + this.id + '/'+ helper.random("tips_to", "make_the", "how_to") + '_' + helper.random("click", "jump");
-    },
-    score: '{{integer(1,10)}}',
-    createdAt: function () {
-      return new Date().getTime() - (Math.floor(Math.random() * 10000000000));
+    content: function (h) {
+      const contentObject = {};
+      ['agh675', 'afr789', '2345tt', 'as67gt'].forEach(postId => {
+        contentObject[postId] = {
+          id: postId,
+          selftext: h.lorem(2, 'paragraphs'),
+        };
+      });
+      return contentObject;
     }
   }
-]
+}

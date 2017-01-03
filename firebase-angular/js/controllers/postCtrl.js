@@ -48,36 +48,38 @@ postmvc.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArr
 	}
 
 	$scope.addPost = function () {
-		let newPostUrl = $scope.newPostUrl.slice(0, -1)
-		if (!newPostUrl.length) {
-			return;
-		}
-		const urlParts = newPostUrl.split('/');
-		if (urlParts.length >= 6) {
-			// check if this post is already in the list
-			const newPostId = urlParts[urlParts.length-2]
-			const duplicatePost = $scope.posts.find(function(post) {
-				return post.id === newPostId;
-			});
-			if (duplicatePost) {
-				$scope.importUrlError({type: 'DUPLICATE'}); 
-				return;
-			}
-		}
-		else {
-			return $scope.importUrlError();
-		}
-
-		const queryStringStart = newPostUrl.indexOf('?');
-		if (queryStringStart > -1) {
-			newPostUrl = newPostUrl.slice(0, queryStringStart);
-		}
-		const redditUrlRegex = /https:\/\/(?:www\.)?reddit\.com\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/;
-		if (!self.fetch) {
-			console.error('JavaScript fetch NOT supported');
-			return;
+		let newPostUrl;
+		if (newPostUrl.lastIndexOf('/') === newPostUrl.length - 1) {
+			newPostUrl = $scope.newPostUrl.slice(0, -1)
+		} else {
+			newPostUrl = $scope.newPostUrl;
 		}
 		if (redditUrlRegex.test(newPostUrl)) {
+			const urlParts = newPostUrl.split('/');
+			if (urlParts.length >= 6) {
+				// check if this post is already in the list
+				const newPostId = urlParts[urlParts.length-2]
+				const duplicatePost = $scope.posts.find(function(post) {
+					return post.id === newPostId;
+				});
+				if (duplicatePost) {
+					$scope.importUrlError({type: 'DUPLICATE'}); 
+					return;
+				}
+			}
+			else {
+				return $scope.importUrlError();
+			}
+
+			const queryStringStart = newPostUrl.indexOf('?');
+			if (queryStringStart > -1) {
+				newPostUrl = newPostUrl.slice(0, queryStringStart);
+			}
+			const redditUrlRegex = /https:\/\/(?:www\.)?reddit\.com\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/;
+			if (!self.fetch) {
+				console.error('JavaScript fetch NOT supported');
+				return;
+			}
 			fetch(newPostUrl + '.json')
 				.then(function(res) {
 					res.json().then(function(data) {
