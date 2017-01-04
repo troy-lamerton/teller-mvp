@@ -16,12 +16,13 @@ if (fs.existsSync(fullDataPath)) {
     if (err) console.error('Error reading raw JSON file, proceeding with default finalPostId');
   });
 
-  // fetch every recent post up to and including this historical post
-  //'57ud9o' is the first click testimony posted on r/makingsense
-  //'57tfsu' is the post before the first click testimony posted on r/makingsense
   currentRawData = JSON.parse(currentRawJSON);
-  newestPost = currentRawData.fetch.newestPost;
-  finalPostId = newestPost;
+  if (currentRawData.fetch && currentRawData.posts && && currentRawData.posts.meta && currentRawData.posts.content) {
+    // fetch every recent post up to and including this historical post
+    //'57ud9o' is the first click testimony posted on r/makingsense
+    //'57tfsu' is the post before the first click testimony posted on r/makingsense
+    finalPostId = currentRawData.fetch && currentRawData.fetch.newestPost;
+  }  
 }
 
 reddit.r('MakingSense').sort('new').all(res => {

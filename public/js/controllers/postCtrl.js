@@ -6,18 +6,41 @@
  * - retrieves and persists the model via the $firebaseObject service
  * - exposes the model to the template and provides event handlers
  */
-postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebaseArray, $firebaseObject, $filter) {
+postchooser.controller('PostCtrl', function PostCtrl(
+	$scope,
+	$location,
+	$firebaseAuth,
+	$firebaseArray,
+	$firebaseObject,
+	$filter) {
+
 	const url = 'https://data-filtering-tool.firebaseio.com/posts';
-	const fireRefMeta = new Firebase(url + '/meta')
-	const fireRefContent = new Firebase(url + '/content')
+	// const fireRef = firebase.database().ref();
+	const fireRefMeta = firebase.database().ref('meta');
+	const fireRefContent = firebase.database().ref('content');
+
+	// $scope.init = function () {
+		/* ------ Firebase Auth ------ */
+		/*$scope.authObj = $firebaseAuth();
+		console.log($scope.authObj)
+		$scope.authObj.$signInWithPopup('google').then(function(authData) {
+		  console.log("Logged in as:", authData);
+		}).catch(function(err) {
+			console.error('Authentication error', err);
+		})*/
+		/* ------ End of Firebase Auth ------ */
+	// }
+
 
 	// Bind the posts to the firebase provider.
 	$scope.posts = $firebaseArray(fireRefMeta);
 	$scope.postsContent = $firebaseObject(fireRefContent);
+
 	$scope.newPostUrl = '';
 	$scope.editedPost = null;
 
 	$scope.$watch('posts', function () {
+		console.log('posts ready')
 		let total = 0;
 		let remaining = 0;
 		angular.forEach($scope.posts, function (post) {
@@ -43,7 +66,6 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 		$scope.totalCount = total;
 		$scope.remainingCount = remaining;
 		$scope.markedCount = total - remaining;
-		$scope.allChecked = remaining === 0;
 	}, true);
 
 	$scope.importUrlError = ({type} = {type: ''}) => {
@@ -191,14 +213,12 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 
 	function filterPosts(posts) {
 		let filteredPosts = posts.filter(post => $scope.search(post));
-		// let filteredPosts = $filter('filter')(posts, {title: $scope.searchQuery});
-		console.log('author or title search filter', filteredPosts)
 		filteredPosts = $filter('postFilter', $location)(filteredPosts);
 		return filteredPosts;
 	}
 
 	$scope.resetCheckboxes = function () {
-		$scope.allChecked = false;
+		$scope.allMarked = false;
 		$scope.allHidden = false;
 	}
 
