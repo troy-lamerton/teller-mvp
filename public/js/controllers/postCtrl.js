@@ -149,6 +149,12 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 		$scope.posts.$save(post);
 	};
 
+	$scope.showPreview = {};
+
+	$scope.togglePreview = function (postId) {
+		$scope.showPreview[postId] = !$scope.showPreview[postId];
+	} 
+
 	$scope.removePost = function (post) {
 		$scope.posts.$remove(post);
 		delete $scope.postsContent[post.id];
@@ -163,9 +169,20 @@ postchooser.controller('PostCtrl', function PostCtrl($scope, $location, $firebas
 		});
 	};
 
+	$scope.searchAllAuthorPosts = function (author) {
+		$scope.setSearchQuery(author);
+		$location.path('/');
+	}
+
 	$scope.setSearchQuery = function (query) {
     $scope.searchQuery = query;
-  }
+  };
+
+	$scope.resetSearchQuery = function (e) {
+		$location.path('/unfiled');
+		$scope.searchQuery = '';
+		$scope.resetCheckboxes();
+	};
 
 	$scope.search = function (post) {
     return (angular.lowercase(post.title).indexOf(angular.lowercase($scope.searchQuery) || '') !== -1 ||

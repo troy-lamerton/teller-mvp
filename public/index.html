@@ -13,7 +13,10 @@
 				<h1>MakingSense</h1>
 				<form id="post-form" ng-submit="addPost()">
 					<input class="input" type="url" placeholder="Import post by url" ng-model="newPostUrl">
-					<input class="input" type="text" placeholder="Search titles" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
+					<div class="search-posts-container">
+						<input class="input" type="text" placeholder="Search titles" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
+						<input type="button" class="clear-search" ng-if="searchQuery" ng-click="resetSearchQuery()" value="×" />
+					</div>
 					<div class="flex-row flex-align-end checkboxes">
 						<label class="input toggle-all">Toggle all:</label>
 						<input class="checkbox checkbox-markall" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
@@ -34,13 +37,14 @@
 				      </div>
 				      <div class="flex-row flex-align-start">
 				        <!-- ).format('DD MMM YYYY h:mm a') -->
-				        <button class="post-expand" ng-click="">=</button>
-				        <span class="small-text post-submitted">Submitted <span title={{post.createdAtDate.toString()}}>{{post.createdAtDate | date : 'dd MMM yyyy'}}</span> by <span class="post-author" ng-click="setSearchQuery(post.author)">{{post.author}}</span></span>
+				        <input class="checkbox checkbox-post-preview" type="checkbox" ng-model="showPreview[post.id]" ng-click="previewPost(post.id)" />
+				        <span class="small-text post-submitted">Submitted <span title={{post.createdAtDate.toString()}}>{{post.createdAtDate | date : 'dd MMM yyyy'}}</span> by <span class="post-author" ng-click="searchAllAuthorPosts(post.author)">{{post.author}}</span></span>
 				      </div>
 						</div>
 						<form ng-submit="doneEditing(post)">
 							<input class="edit" ng-model="post.title" post-escape="revertEditing(post)" post-blur="doneEditing(post)" post-focus="post == editedPost">
 						</form>
+		        <div class="small-text post-preview" ng-if="showPreview[post.id]">{{postsContent[post.id].selftext}}</div>
 					</li>
 				</ul>
 			</section>
