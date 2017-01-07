@@ -34,13 +34,13 @@
 				      <div class="flex-row">
 								<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" --backup-ng-dblclick="editPost(post)" ng-class="{'post-title': true, highlighted: post.highlighted, red: post.hidden}">{{post.title}}</a>
 				        <div class="post-buttons">
-									<input class="toggle" type="checkbox" ng-model="post.marked" ng-change="posts.$save(post)">
-									<button class="destroy" ng-click="toggleHidden(post)" ng-right-click="removePost(post)" />
+									<input class="toggle" type="checkbox" ng-click="toggle(post, 'marked')">
+									<button class="destroy" ng-click="toggle(post, 'hidden')" ng-right-click="removePost(post)" />
 								</div>
 				      </div>
 				      <div class="flex-row flex-align-start">
 				        <!-- ).format('DD MMM YYYY h:mm a') -->
-				        <input class="checkbox checkbox-post-preview" type="checkbox" ng-click="togglePreview(post.id)" />
+				        <span class="checkbox checkbox-post-preview" ng-class="{'post-preview-active': showPreview[post.id]}" ng-click="togglePreview(post.id)">=</span>
 				        <span class="small-text post-submitted">Submitted <span title={{post.createdAtDate.toString()}}>{{post.createdAtDate | date : 'dd MMM yyyy'}}</span> by <span class="post-author" title="Show all posts by {{post.author}}" ng-click="searchAllAuthorPosts(post.author)">{{post.author}}</span></span>
 				      </div>
 						</div>
@@ -50,7 +50,7 @@
 			</section>
 			<footer id="footer" ng-show="totalCount" ng-cloak>
 				<span id="post-count"><strong>{{remainingCount}}</strong>
-					<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+					<ng-pluralize count="remainingCount" when="{ one: 'post unfiled', other: 'posts unfiled' }"></ng-pluralize>
 				</span>
 				<ul id="filters">
 					<li>

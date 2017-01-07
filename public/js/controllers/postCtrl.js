@@ -157,8 +157,8 @@ postchooser.controller('PostCtrl', function PostCtrl(
 			})
 	}
 
-	$scope.toggleHidden = function (post) {
-		post.hidden = !post.hidden;
+	$scope.toggle = function (post, key) {
+		post[key] = !post[key];
 		$scope.posts.$save(post);
 	};
 
