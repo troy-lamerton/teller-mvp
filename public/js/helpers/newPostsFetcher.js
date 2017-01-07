@@ -13,7 +13,7 @@ window.fetchNewPostsAndSave = function (subreddit) {
         const posts = snapshot.child('posts/meta').val()
         let index = 0;
         let newestCreatedAt = 0;
-        for (key in posts) {
+        for (let key in posts) {
           const post = posts[key];
           if (post && !post.importedByUrl && post.createdAt > newestCreatedAt) {
             newestCreatedAt = post.createdAt;
@@ -53,10 +53,12 @@ window.fetchNewPostsAndSave = function (subreddit) {
               return post.id === finalPostId;
             });
             if (finalPost) {
+              finalPostWasReached = true;
               moreData.splice(finalPostIndex);
               totalData = totalData.concat(moreData);
-              // finalPostReached();
-              finalPostWasReached = true;
+              if (totalData.length <= 1) {
+                return callback({code: 'NoNewPosts', message: 'The newest post in the database matched the newest post on reddit'});
+              }
               return callback();
             } else {
               totalData = totalData.concat(moreData);
@@ -66,19 +68,16 @@ window.fetchNewPostsAndSave = function (subreddit) {
                 return callback({code: 'FinalPostNotFound', message:'finalPostId was not seen during the data fetching, maybe the post was deleted.'});
               }
             }
-
+            if (!moreData[moreData.length-1]) {
+              return callback({code: 'NoMorePosts', message: 'The oldest post on the subreddit was reached without seeing the finalPost'});
+            }
             afterRedditPostId = 't3_' + moreData[moreData.length-1].id;
-            callback();
           });
         }
 
         function finalPostReached(err) {
           if (err) {
             reject(err)
-            return;
-          }
-          if (totalData.length === 0) {
-            reject({code: 'NoNewPosts', message: 'The newest post in the database matched the newest post on reddit'})
             return;
           }
 
@@ -102,6 +101,9 @@ window.fetchNewPostsAndSave = function (subreddit) {
 
         async.whilst(fetchMore, fetchPosts, finalPostReached);
 
+      })
+      .catch(err => {
+        console.error('error in the newPostsFetcher', err);
       });
   });
 }

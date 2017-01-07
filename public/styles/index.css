@@ -92,6 +92,7 @@ div.search-posts-container {
   background-color: green;
 }
 .checkbox-hideall {
+  margin-left: 5px;
   background-color: #ead3d3;
 }
 .hideall-active {

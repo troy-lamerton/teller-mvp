@@ -67,11 +67,11 @@ postchooser.controller('PostCtrl', function PostCtrl(
 
 	firebase.auth().onAuthStateChanged(function(user) {
 	  if (user) {
-	    // User is signed in.
+	    // User is signed in
 			console.log('signed in', firebase.auth().currentUser);
 			$scope.user = user;
 	  } else {
-	    // No user is signed in.
+	    // No user is signed in
 	    $scope.user = null;
 	  }
 	  $scope.$apply(); // refreshes the view, this is neccessary to update the sign in buttons
@@ -155,6 +155,9 @@ postchooser.controller('PostCtrl', function PostCtrl(
 					$scope.posts.$add(post);
 				})
 			})
+			.catch(err => {
+				console.error(err);
+			});
 	}
 
 	$scope.toggle = function (post, key) {

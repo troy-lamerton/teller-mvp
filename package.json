@@ -1,14 +1,19 @@
 {
-  "name": "express-demo",
+  "name": "data-filtering-tool",
   "version": "1.0.0",
-  "description": "A web interface to curate data, decide what to keep and what to throw away. Input is your JSON array and the output is a JSON array of the data you choose to keep.",
+  "description": "A web interface to curate reddit posts, decide what to keep and what to throw away. Uses firebase realtime database.",
   "main": "index.js",
   "scripts": {
     "start": "cd public && budo --live --watch-glob '**/*.{html,css,js}'",
+    "watch": "nodemon --exec 'npm run build-js' --watch ./public/js",
     "fetch-reddit": "node ./getRedditData",
     "fetch": "npm run fetch-reddit",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "babel ./public/js/helpers/newPostsFetcher.js --presets babel-preset-es2015 | uglifyjs - -o ./public/js/helpers/newPostsFetcher.min.js"
+    "build-helpers": "babel ./public/js/helpers --presets babel-preset-es2015 | uglifyjs - -o ./public/dist/helpers.min.js",
+    "build-controllers": "babel ./public/js/controllers --presets babel-preset-es2015 | uglifyjs - -o ./public/dist/controllers.min.js",
+    "build-directives": "babel ./public/js/directives --presets babel-preset-es2015 | uglifyjs - -o ./public/dist/directives.min.js",
+    "build-js": "babel ./public/js --presets babel-preset-es2015 -o ./public/dist/bundle.js && uglifyjs ./public/dist/bundle.js -o ./public/dist/bundle.js --source-map ./public/dist/bundle.map --source-map-url bundle.map",
+    "build-css": "cat ./public/styles/index.css ./public/styles/template.css | cleancss -o ./public/dist/styles/styles.min.css",
+    "build": "concurrently 'npm run build-css' 'npm run build-js'"
   },
   "repository": {
     "type": "git",
@@ -34,6 +39,8 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-plugin-uglify": "^1.0.2",
-    "babel-preset-es2015": "^6.18.0"
+    "babel-preset-es2015": "^6.18.0",
+    "clean-css": "^3.4.23",
+    "concurrently": "^3.1.0"
   }
 }

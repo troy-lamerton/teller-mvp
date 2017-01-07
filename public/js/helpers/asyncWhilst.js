@@ -1,8 +1,4 @@
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (factory((global.async = global.async || {})));
-}(this, (function (exports) { 'use strict';
+'use strict';
 
 function apply(func, thisArg, args) {
   switch (args.length) {
@@ -63,9 +59,4 @@ var index = {
   whilst: whilst,
 };
 
-exports['default'] = index;
-exports.whilst = whilst;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+window.async = index;
