@@ -4,7 +4,8 @@
   "description": "A web interface to curate reddit posts, decide what to keep and what to throw away. Uses firebase realtime database.",
   "main": "index.js",
   "scripts": {
-    "start": "cd public && budo --live --watch-glob '**/*.{html,css,js}'",
+    "start": "concurrently 'npm run watch' 'npm run serve'",
+    "serve": "cd public && budo --live --watch-glob '**/*.{html,css,js}'",
     "watch": "nodemon --exec 'npm run build-js' --watch ./public/js",
     "fetch-reddit": "node ./getRedditData",
     "fetch": "npm run fetch-reddit",

@@ -149,14 +149,28 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	};
 
 	$scope.importNewPosts = function () {
-		window.fetchNewPostsAndSave('MakingSense')
+		window.fetchNewPosts('MakingSense')
 			.then(newPosts => {
+				if (newPosts.length === 0) {
+					console.info('No new posts on Reddit');
+					return;
+				}
+				let numDuplicates = 0;
 				newPosts.forEach(post => {
-					$scope.posts.$add(post);
-				})
+					const duplicatePost = $scope.posts.find(function(targetPost) {
+						return targetPost.id === post.id;
+					});
+					if (duplicatePost) {
+						numDuplicates++;
+					} else {
+						$scope.posts.$add(post);
+					}
+				});
+				if (numDuplicates > 0) console.warn(`The fetcher returned ${numDuplicates} duplicate posts`);
+				console.info(`Fetched ${newPosts.length} new posts`);
 			})
 			.catch(err => {
-				console.error(err);
+				console.error('Import new posts error:', err);
 			});
 	}
 
@@ -195,7 +209,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 		} else {
 			$scope.showPreview[postId] = false;
 		}
-	} 
+	}
 
 	$scope.removePost = function (post) {
 		$scope.posts.$remove(post);
