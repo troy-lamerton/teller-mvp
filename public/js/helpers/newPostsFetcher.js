@@ -20,7 +20,6 @@ window.fetchNewPostsAndSave = function (subreddit) {
             finalPostId = post.id;
           }
         }
-        console.info('finalPostId:', finalPostId);
 
         let numFetches = 0;
         const maxFetches = 10;
@@ -34,7 +33,6 @@ window.fetchNewPostsAndSave = function (subreddit) {
         let totalData = [];
         function fetchPosts(callback) {
           reddit.new(subreddit).limit(100).after(afterRedditPostId).fetch(json => {
-            console.log('Fetching posts after', afterRedditPostId);
             let moreData = json.data.children.filter(post => !post.data.stickied);
             // keep only the data I will use to display the post
             moreData = moreData.map(post => {
@@ -55,10 +53,8 @@ window.fetchNewPostsAndSave = function (subreddit) {
               return post.id === finalPostId;
             });
             if (finalPost) {
-              console.log(`Final post '${finalPost.title}' (id: ${finalPost.id}) reached`);
               moreData.splice(finalPostIndex);
               totalData = totalData.concat(moreData);
-              console.log('Total posts:', totalData.length);
               // finalPostReached();
               finalPostWasReached = true;
               return callback();
@@ -82,11 +78,9 @@ window.fetchNewPostsAndSave = function (subreddit) {
             return;
           }
           if (totalData.length === 0) {
-            console.log('No new posts');
             reject({code: 'NoNewPosts', message: 'The newest post in the database matched the newest post on reddit'})
             return;
           }
-          console.log('End', 'Total posts:', totalData.length);
 
           const fetchData = {
             newestPost: totalData[0],
@@ -103,11 +97,9 @@ window.fetchNewPostsAndSave = function (subreddit) {
           })
 
           // save database and exit the whole function
-          console.log('Great success!');
           resolve(totalData);
         }
 
-        console.log('Fetching...')
         async.whilst(fetchMore, fetchPosts, finalPostReached);
 
       });

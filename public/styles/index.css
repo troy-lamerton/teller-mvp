@@ -11,7 +11,7 @@ div.search-posts-container {
   white-space: nowrap
 }
 
-input.clear-search {
+.clear-search {
   margin-left: -47px;
   display: inline;
   width: 32px;
@@ -22,10 +22,7 @@ input.clear-search {
   z-index: 12;
   background-color: transparent;
 }
-input.clear-search:after {
-  content: '×';
-}
-input.clear-search:active {
+.clear-search:active {
   color: transparent;
 }
 
@@ -75,24 +72,29 @@ input.clear-search:active {
   margin-bottom: auto;
 }
 .checkbox {
-  -webkit-appearance: none;
-  appearance: none;
-  border: 2px solid grey;
-  border-radius: 3px;
   width: 24px;
   height: 24px;
   padding: 1px;
+
+  border: 2px solid grey;
+  border-radius: 3px;
+  
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
 }
 .checkbox-markall {
   background-color: #d5edd5;
 }
-.checkbox-markall:checked {
+.markall-active {
   background-color: green;
 }
 .checkbox-hideall {
   background-color: #ead3d3;
 }
-.checkbox-hideall:checked {
+.hideall-active {
   background-color: #db4343;
 }
 .button.ocean {

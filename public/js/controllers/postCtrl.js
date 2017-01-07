@@ -237,20 +237,22 @@ postchooser.controller('PostCtrl', function PostCtrl(
 		$scope.allHidden = false;
 	}
 
-	$scope.markAll = function (allMarked) {
+	$scope.markAll = function () {
+		$scope.allMarked = !$scope.allMarked;
 		const filteredPosts = filterPosts($scope.posts);
-		console.log('Set marked to:', allMarked, Object.keys(filteredPosts).length)
+		console.log('Set marked to:', $scope.allMarked, Object.keys(filteredPosts).length)
 		angular.forEach(filteredPosts, function (post) {
-			post.marked = allMarked;
+			post.marked = $scope.allMarked;
 			$scope.posts.$save(post);
 		});
 	};
 
-	$scope.hideAll = function (allHidden) {
+	$scope.hideAll = function () {
+		$scope.allHidden = !$scope.allHidden;
 		const filteredPosts = filterPosts($scope.posts);
-		console.log('Set hidden to:', allHidden, Object.keys(filteredPosts).length)
+		console.log('Set hidden to:', $scope.allHidden, Object.keys(filteredPosts).length)
 		angular.forEach(filteredPosts, function (post) {
-			post.hidden = allHidden;
+			post.hidden = $scope.allHidden;
 			$scope.posts.$save(post);
 		});
 	};

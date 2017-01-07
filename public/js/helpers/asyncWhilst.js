@@ -45,7 +45,7 @@ function overRest$1(func, start, transform) {
 }
 
 function rest(func, start) {
-    return overRest$1(func, start, (val) => (val));
+    return overRest$1(func, start, function(val){return val});
 }
 
 function whilst(test, iteratee, callback) {
