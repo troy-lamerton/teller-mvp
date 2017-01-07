@@ -14,15 +14,10 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	$firebaseObject,
 	$filter) {
 
-	const url = 'https://data-filtering-tool.firebaseio.com/posts';
-	// const fireRef = firebase.database().ref();
 	const fireRefMeta = firebase.database().ref('posts/meta');
-	const fireRefContent = firebase.database().ref('posts/content');
 
 	// Bind the posts to the firebase provider.
 	$scope.posts = $firebaseArray(fireRefMeta);
-
-	$scope.editedPost = null;
 
 	$scope.$watch('posts', function () {
 		let total = 0;
@@ -126,7 +121,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 			}
 			fetch(newPostUrl + '.json')
 				.then(function(res) {
-					res.json().then(function(data) {
+					res.json().then(function(json) {
 						const postData = json[0].data.children[0].data;
 						const { title, id, author, score, created_utc, url, selftext } = postData;
 						const newPost = {
@@ -136,17 +131,16 @@ postchooser.controller('PostCtrl', function PostCtrl(
 							score,
 							url,
 							createdAt: created_utc,
-							marked: false,
-							hidden: false
+							importedByUrl: true
 						};
 						$scope.posts.$add(newPost);
-						$scope.posts.$save(newPost);
+						// keep post content in memory so we can show it quicker 
 						$scope.postsContent[id] = selftext;
 						$scope.newPostUrl = '';
 						$scope.$apply();
 					})
 				})
-				.catch(function (err) {
+				.catch(err => {
 					console.error('Error fetching reddit data', err);
 				});
 		} else {
@@ -155,7 +149,12 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	};
 
 	$scope.importNewPosts = function () {
-		window.fetchNewPostsAndSave('MakingSense');
+		window.fetchNewPostsAndSave('MakingSense')
+			.then(newPosts => {
+				newPosts.forEach(post => {
+					$scope.posts.$add(post);
+				})
+			})
 	}
 
 	$scope.toggleHidden = function (post) {
