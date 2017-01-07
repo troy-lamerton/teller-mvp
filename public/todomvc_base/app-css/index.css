@@ -75,7 +75,7 @@ input[type="checkbox"] {
 	font-size: 80px;
 	font-weight: 100;
 	text-align: center;
-	color: rgba(175, 47, 47, 0.15);
+	color: rgba(47, 47, 155, 0.15);
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
@@ -85,7 +85,6 @@ input[type="checkbox"] {
 .edit {
 	position: relative;
 	margin: 0;
-	width: 100%;
 	font-size: 1.5em;
 	font-family: inherit;
 	font-weight: inherit;

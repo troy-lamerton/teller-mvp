@@ -29,6 +29,9 @@ input.clear-search:active {
   color: transparent;
 }
 
+.wide {
+  width: 100%;
+}
 
 .content {
   width: 95%;
@@ -59,21 +62,23 @@ input.clear-search:active {
 .flex-align-end {
   justify-content: flex-end;
 }
-.checkboxes {
+.buttons-row {
   max-height: none;
-  padding-right: 5px;
+  padding: 0 6px;
 }
 .toggle-all {
   text-align: right;
   color: grey;
+}
+.buttons-row > .checkbox {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .checkbox {
   -webkit-appearance: none;
   appearance: none;
   border: 2px solid grey;
   border-radius: 3px;
-  margin-top: auto;
-  margin-bottom: auto;
   width: 24px;
   height: 24px;
   padding: 1px;
@@ -89,6 +94,50 @@ input.clear-search:active {
 }
 .checkbox-hideall:checked {
   background-color: #db4343;
+}
+.button.ocean {
+  color: #fff;
+  background: #2b90d9;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 19px;
+
+  width: auto;
+  padding: 0 14px;
+  height: 29px;
+  margin: 6px 0;
+
+  cursor: pointer;
+  user-select: none;
+  transition: all 60ms ease-in-out;
+  text-decoration: none !important;
+  text-transform: capitalize;
+
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance:         none;
+}
+.button:hover {
+  transition: all 60ms ease;
+  opacity: .85;
+}
+.button:active {
+  transition: all 60ms ease;
+  opacity: .75;
+}
+.button:focus {
+  outline: 1px dotted #959595;
+  outline-offset: -4px;
+}
+.self-align-start {
+  margin-right: auto;
 }
 
 .red {
@@ -107,7 +156,8 @@ input.clear-search:active {
 .post-buttons {
   display: flex;
   flex-spacing: space-between;
-  align-items: center
+  align-items: center;
+  height: 100%;
 }
 
 .checkbox-post-preview:after {

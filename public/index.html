@@ -9,18 +9,22 @@
 	</head>
 	<body>
 		<section id="postapp" ng-controller="PostCtrl">
-			<header id="header" ng-init="init()">
+			<header id="header">
 				<h1>MakingSense</h1>
-				<form id="post-form" ng-submit="addPost()">
-					<input class="input" type="url" placeholder="Import post by url" ng-model="newPostUrl">
+				<form id="post-form" ng-submit="addPostFromUrl()">
+					<input class="input wide" type="url" placeholder="Import post by url" ng-disabled="user === null" ng-model="newPostUrl">
 					<div class="search-posts-container">
-						<input class="input" type="text" placeholder="Search posts" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
+						<input class="input wide" type="text" placeholder="Search posts" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
 						<input type="button" class="clear-search" ng-if="searchQuery" ng-click="resetSearchQuery()" value="×" />
+						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 					</div>
-					<div class="flex-row flex-align-end checkboxes">
+					<div class="flex-row flex-align-end buttons-row">
+						<div ng-if="user !== null" class="button ocean self-align-start" ng-click="importNewPosts()">Import new posts</div>
+						<div ng-if="user === null" class="button ocean self-align-start" ng-click="signInWithGoogle()">Log in to edit</div>
+						<div ng-if="user !== null" class="button ocean self-align-start" ng-click="signOut()">Logout {{user.displayName}}</div>
 						<label class="input toggle-all">Toggle all:</label>
-						<input class="checkbox checkbox-markall" type="checkbox" ng-model="allMarked" ng-click="markAll(allMarked)">
-						<input class="checkbox checkbox-hideall" type="checkbox" ng-model="allHidden" ng-click="hideAll(allHidden)">
+						<input class="checkbox checkbox-markall" type="checkbox" ng-disabled="user === null" ng-model="allMarked" ng-click="markAll(allMarked)">
+						<input class="checkbox checkbox-hideall" type="checkbox" ng-disabled="user === null" ng-model="allHidden" ng-click="hideAll(allHidden)">
 					<div>
 				</form>
 			</header>

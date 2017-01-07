@@ -16,31 +16,16 @@ postchooser.controller('PostCtrl', function PostCtrl(
 
 	const url = 'https://data-filtering-tool.firebaseio.com/posts';
 	// const fireRef = firebase.database().ref();
-	const fireRefMeta = firebase.database().ref('meta');
-	const fireRefContent = firebase.database().ref('content');
-
-	// $scope.init = function () {
-		/* ------ Firebase Auth ------ */
-		/*$scope.authObj = $firebaseAuth();
-		console.log($scope.authObj)
-		$scope.authObj.$signInWithPopup('google').then(function(authData) {
-		  console.log("Logged in as:", authData);
-		}).catch(function(err) {
-			console.error('Authentication error', err);
-		})*/
-		/* ------ End of Firebase Auth ------ */
-	// }
-
+	const fireRefMeta = firebase.database().ref('posts/meta');
+	const fireRefContent = firebase.database().ref('posts/content');
 
 	// Bind the posts to the firebase provider.
 	$scope.posts = $firebaseArray(fireRefMeta);
 	$scope.postsContent = $firebaseObject(fireRefContent);
 
-	$scope.newPostUrl = '';
 	$scope.editedPost = null;
 
 	$scope.$watch('posts', function () {
-		console.log('posts ready')
 		let total = 0;
 		let remaining = 0;
 		angular.forEach($scope.posts, function (post) {
@@ -68,6 +53,37 @@ postchooser.controller('PostCtrl', function PostCtrl(
 		$scope.markedCount = total - remaining;
 	}, true);
 
+	$scope.signInWithGoogle = function () {
+		const provider = new firebase.auth.GoogleAuthProvider();
+		firebase.auth().signInWithPopup(provider).then(function(authData) {
+		}).catch(function(err) {
+			console.error('Authentication error', err);
+		})
+	}
+
+	$scope.signOut = function () {
+		firebase.auth().signOut().then(function() {
+		  // Sign-out successful.
+	    $scope.user = null;
+		}).catch(function(err) {
+		  // An error happened.
+			console.error('Signout error', err);
+		});
+	}
+
+	firebase.auth().onAuthStateChanged(function(user) {
+	  if (user) {
+	    // User is signed in.
+			console.log('signed in', firebase.auth().currentUser);
+			$scope.user = user;
+	  } else {
+	    // No user is signed in.
+	    $scope.user = null;
+	  }
+	  $scope.$apply(); // refreshes the view, this is neccessary to update the sign in buttons
+	});
+
+
 	$scope.importUrlError = ({type} = {type: ''}) => {
 		switch (type) {
 			case 'DUPLICATE':
@@ -78,12 +94,19 @@ postchooser.controller('PostCtrl', function PostCtrl(
 		}
 	}
 
-	$scope.addPost = function () {
-		let newPostUrl;
+	$scope.addPostFromUrl = function () {
+		if (!$scope.newPostUrl) return;
+		if (!self.fetch) {
+			console.error('JavaScript fetch NOT supported');
+			window.alert('You are using an old browser not supported by this website. Please upgrade to a newer version');
+			return;
+		}
+		const redditUrlRegex = /https:\/\/(?:www\.)?reddit\.com\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/;
+		let newPostUrl = $scope.newPostUrl;
 		if (newPostUrl.lastIndexOf('/') === newPostUrl.length - 1) {
-			newPostUrl = $scope.newPostUrl.slice(0, -1)
+			newPostUrl = newPostUrl.slice(0, -1)
 		} else {
-			newPostUrl = $scope.newPostUrl;
+			newPostUrl = newPostUrl;
 		}
 		if (redditUrlRegex.test(newPostUrl)) {
 			const urlParts = newPostUrl.split('/');
@@ -95,6 +118,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 				});
 				if (duplicatePost) {
 					$scope.importUrlError({type: 'DUPLICATE'}); 
+					$scope.newPostUrl = '';
 					return;
 				}
 			}
@@ -106,35 +130,26 @@ postchooser.controller('PostCtrl', function PostCtrl(
 			if (queryStringStart > -1) {
 				newPostUrl = newPostUrl.slice(0, queryStringStart);
 			}
-			const redditUrlRegex = /https:\/\/(?:www\.)?reddit\.com\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/;
-			if (!self.fetch) {
-				console.error('JavaScript fetch NOT supported');
-				return;
-			}
 			fetch(newPostUrl + '.json')
 				.then(function(res) {
 					res.json().then(function(data) {
-						if (typeof data === 'object' && data instanceof Array) {
-							const postData = data[0].data.children[0].data;
-							const { title, id, author, score, created_utc, url, selftext } = postData;
-							$scope.posts.$add({
-								id,
-								title,
-								author,
-								score,
-								url,
-								createdAt: created_utc,
-								marked: false,
-								hidden: false
-							});
-							fireRefContent.child(id).set({
-								id,
-								selftext
-							});
-							$scope.newPostUrl = '';
-						} else {
-							console.warn('Reddit data fetched json is not an Array')
-						}
+						const postData = data[0].data.children[0].data;
+						const { title, id, author, score, created_utc, url, selftext } = postData;
+						$scope.posts.$add({
+							id,
+							title,
+							author,
+							score,
+							url,
+							createdAt: created_utc,
+							marked: false,
+							hidden: false
+						});
+						fireRefContent.child(id).set({
+							id,
+							selftext
+						});
+						$scope.newPostUrl = '';
 					})
 				})
 				.catch(function (err) {
@@ -143,28 +158,11 @@ postchooser.controller('PostCtrl', function PostCtrl(
 		} else {
 			return $scope.importUrlError();
 		}
-
 	};
 
-	$scope.editPost = function (post) {
-		$scope.editedPost = post;
-		$scope.originalPost = angular.extend({}, $scope.editedPost);
-	};
+	$scope.importNewPosts = function () {
 
-	$scope.doneEditing = function (post) {
-		$scope.editedPost = null;
-		const title = post.title;
-		if (title) {
-			$scope.posts.$save(post);
-		} else {
-			$scope.removePost(post);
-		}
-	};
-
-	$scope.revertEditing = function (post) {
-		post.title = $scope.originalPost.title;
-		$scope.doneEditing(post);
-	};
+	}
 
 	$scope.toggleHidden = function (post) {
 		post.hidden = !post.hidden;
