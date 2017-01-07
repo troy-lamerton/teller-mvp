@@ -12,14 +12,14 @@
 			<header id="header">
 				<h1>MakingSense</h1>
 				<form id="post-form" ng-submit="addPostFromUrl()">
-					<input class="input wide" type="url" placeholder="Import post by url" ng-disabled="user === null" ng-model="newPostUrl">
+					<input class="input wide" type="url" placeholder="Import post by url" ng-if="user !== null" ng-model="newPostUrl">
 					<div class="search-posts-container">
 						<input class="input wide" type="text" placeholder="Search posts" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
 						<input type="button" class="clear-search" ng-if="searchQuery" ng-click="resetSearchQuery()" value="×" />
 						<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
 					</div>
 					<div class="flex-row flex-align-end buttons-row">
-						<div ng-if="user !== null" class="button ocean self-align-start" ng-click="importNewPosts()">Import new posts</div>
+						<div ng-if="user !== null" class="button ocean self-align-start" ng-click="importNewPosts()">Import all new posts</div>
 						<div ng-if="user === null" class="button ocean self-align-start" ng-click="signInWithGoogle()">Log in to edit</div>
 						<div ng-if="user !== null" class="button ocean self-align-start" ng-click="signOut()">Logout {{user.displayName}}</div>
 						<label class="input toggle-all">Toggle all:</label>
@@ -89,6 +89,7 @@
 		<script src="https://cdn.firebase.com/libs/angularfire/2.2.0/angularfire.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.1/fetch.min.js"></script>
 		<script src="js/polyfills/ArrayFind.js"></script>
+		<script src="//cdn.jsdelivr.net/reddit.js/0.1.3/reddit.min.js"></script>
 		<script src="js/app.js"></script>
 		<script src="js/controllers/postCtrl.js"></script>
 		<script src="js/directives/buttonRightClick.js"></script>

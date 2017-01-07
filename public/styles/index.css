@@ -64,7 +64,7 @@ input.clear-search:active {
 }
 .buttons-row {
   max-height: none;
-  padding: 0 6px;
+  padding: 0 6px 0 45px;
 }
 .toggle-all {
   text-align: right;

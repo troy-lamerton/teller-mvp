@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const path = require('path');
 const fs = require('fs');
 const reddit = require('redwrap');
@@ -17,12 +16,12 @@ if (fs.existsSync(fullDataPath)) {
   });
 
   currentRawData = JSON.parse(currentRawJSON);
-  if (currentRawData.fetch && currentRawData.posts && && currentRawData.posts.meta && currentRawData.posts.content) {
+  if (currentRawData.fetch && currentRawData.posts && currentRawData.posts.meta) {
     // fetch every recent post up to and including this historical post
     //'57ud9o' is the first click testimony posted on r/makingsense
     //'57tfsu' is the post before the first click testimony posted on r/makingsense
     finalPostId = currentRawData.fetch && currentRawData.fetch.newestPost;
-  }  
+  }
 }
 
 reddit.r('MakingSense').sort('new').all(res => {
@@ -49,11 +48,12 @@ reddit.r('MakingSense').sort('new').all(res => {
       };
     })
 
-    const finalPostIndex = _.findIndex(moreData, post => {
+    let finalPostIndex;
+    const finalPost = moreData.find((post, index) => {
+      finalPostIndex = index;
       return post.id === finalPostId;
     })
-    if (finalPostIndex > -1) {
-      const finalPost = moreData[finalPostIndex];
+    if (finalPost) {
       console.log(`Final post '${finalPost.title}' (id: ${finalPost.id}) reached`);
       moreData.splice(finalPostIndex);
       totalData = totalData.concat(moreData);
@@ -89,18 +89,15 @@ reddit.r('MakingSense').sort('new').all(res => {
     // data about current run to include in the JSON output
     totalData.forEach(post => {
       const { selftext, id } = post;
-      const postContent = {id, selftext};
       delete post.selftext;
-      const postMeta = _.assign({hidden: false, marked: false}, post);
+      const postMeta = Object.assign({hidden: false, marked: false}, post);
 
       postsMetaArray.push(postMeta)
-      postsContent[post.id] = postContent;
     })
 
-    const postsObject = _.assign(fetchData, {
+    const postsObject = Object.assign(fetchData, {
       posts: {
-        meta: postsMetaArray.concat(currentRawData ? currentRawData.posts.meta : []),
-        content: _.assign(postsContent, currentRawData ? currentRawData.posts.content : {})
+        meta: postsMetaArray.concat(currentRawData ? currentRawData.posts.meta : [])
       }
     });
 

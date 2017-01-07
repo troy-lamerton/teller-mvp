@@ -14,16 +14,6 @@
           createdAt: new Date().getTime() - (Math.floor(Math.random() * 10000000000))
         }
       });
-    },
-    content: function (h) {
-      const contentObject = {};
-      ['agh675', 'afr789', '2345tt', 'as67gt'].forEach(postId => {
-        contentObject[postId] = {
-          id: postId,
-          selftext: h.lorem(2, 'paragraphs'),
-        };
-      });
-      return contentObject;
     }
   }
 }
