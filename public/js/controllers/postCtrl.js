@@ -155,7 +155,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	};
 
 	$scope.importNewPosts = function () {
-
+		window.fetchNewPostsAndSave('MakingSense');
 	}
 
 	$scope.toggleHidden = function (post) {
