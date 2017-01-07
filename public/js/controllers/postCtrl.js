@@ -21,7 +21,6 @@ postchooser.controller('PostCtrl', function PostCtrl(
 
 	// Bind the posts to the firebase provider.
 	$scope.posts = $firebaseArray(fireRefMeta);
-	$scope.postsContent = $firebaseObject(fireRefContent);
 
 	$scope.editedPost = null;
 
@@ -96,11 +95,6 @@ postchooser.controller('PostCtrl', function PostCtrl(
 
 	$scope.addPostFromUrl = function () {
 		if (!$scope.newPostUrl) return;
-		if (!self.fetch) {
-			console.error('JavaScript fetch NOT supported');
-			window.alert('You are using an old browser not supported by this website. Please upgrade to a newer version');
-			return;
-		}
 		const redditUrlRegex = /https:\/\/(?:www\.)?reddit\.com\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/;
 		let newPostUrl = $scope.newPostUrl;
 		if (newPostUrl.lastIndexOf('/') === newPostUrl.length - 1) {
@@ -133,9 +127,9 @@ postchooser.controller('PostCtrl', function PostCtrl(
 			fetch(newPostUrl + '.json')
 				.then(function(res) {
 					res.json().then(function(data) {
-						const postData = data[0].data.children[0].data;
+						const postData = json[0].data.children[0].data;
 						const { title, id, author, score, created_utc, url, selftext } = postData;
-						$scope.posts.$add({
+						const newPost = {
 							id,
 							title,
 							author,
@@ -144,12 +138,12 @@ postchooser.controller('PostCtrl', function PostCtrl(
 							createdAt: created_utc,
 							marked: false,
 							hidden: false
-						});
-						fireRefContent.child(id).set({
-							id,
-							selftext
-						});
+						};
+						$scope.posts.$add(newPost);
+						$scope.posts.$save(newPost);
+						$scope.postsContent[id] = selftext;
 						$scope.newPostUrl = '';
+						$scope.$apply();
 					})
 				})
 				.catch(function (err) {
@@ -170,15 +164,39 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	};
 
 	$scope.showPreview = {};
+	$scope.postsContent = {};
 
 	$scope.togglePreview = function (postId) {
-		$scope.showPreview[postId] = !$scope.showPreview[postId];
+		const show = !$scope.showPreview[postId];
+		if (show === true) {
+			if ($scope.postsContent[postId]) {
+				// already fetched previously
+				$scope.showPreview[postId] = true;
+			} else {
+				// fetch post content
+				const post = $scope.posts.find((({id}) => id === postId));
+				const postUrl = post.url;
+				fetch(postUrl + '.json')
+					.then(function(res) {
+						res.json().then(function(json) {
+							const postData = json[0].data.children[0].data;
+							const { selftext } = postData;
+							$scope.postsContent[postId] = selftext;
+							$scope.showPreview[postId] = true;
+							$scope.$apply();
+						})
+					})
+					.catch(function (err) {
+						console.error('Error fetching reddit data', err);
+					});
+			}
+		} else {
+			$scope.showPreview[postId] = false;
+		}
 	} 
 
 	$scope.removePost = function (post) {
 		$scope.posts.$remove(post);
-		delete $scope.postsContent[post.id];
-		$scope.postsContent.$save();
 	};
 
 	$scope.clearCompletedPosts = function () {
