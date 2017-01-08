@@ -52,7 +52,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 		firebase.auth().signInWithPopup(provider).then(function(authData) {
 		}).catch(function(err) {
 			console.error('Authentication error', err);
-		})
+		});
 	}
 
 	$scope.signOut = function () {
@@ -78,13 +78,16 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	});
 
 
-	$scope.importUrlError = ({type} = {type: ''}) => {
-		switch (type) {
-			case 'DUPLICATE':
+	$scope.importError = (error = {code: ''}) => {
+		switch (error.code) {
+			case 'Duplicate':
 				window.alert('Post is already in the list');
 				break;
-			default:
+			case 'InvalidUrl':
 				window.alert('URL is not a valid Reddit post url');
+				break;
+			default:
+				console.error('Unexpected import error', error.message);
 		}
 	}
 
@@ -106,13 +109,13 @@ postchooser.controller('PostCtrl', function PostCtrl(
 					return post.id === newPostId;
 				});
 				if (duplicatePost) {
-					$scope.importUrlError({type: 'DUPLICATE'}); 
+					$scope.importError({code: 'Duplicate'}); 
 					$scope.newPostUrl = '';
 					return;
 				}
 			}
 			else {
-				return $scope.importUrlError();
+				return $scope.importError({code: 'InvalidUrl'});
 			}
 
 			const queryStringStart = newPostUrl.indexOf('?');
@@ -144,7 +147,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 					console.error('Error fetching reddit data', err);
 				});
 		} else {
-			return $scope.importUrlError();
+			return $scope.importError({code: 'InvalidUrl'});
 		}
 	};
 

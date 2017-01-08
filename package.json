@@ -6,14 +6,13 @@
   "scripts": {
     "start": "concurrently 'npm run watch' 'npm run serve'",
     "serve": "cd public && budo --live --watch-glob '**/*.{html,css,js}'",
-    "watch": "nodemon --exec 'npm run build-js' --watch ./public/js",
+    "watch": "concurrently 'npm run watch-js' 'npm run watch-css'",
+    "watch-js": "nodemon --exec 'npm run build-js' --watch public/js",
+    "watch-css": "nodemon --exec 'npm run build-css' --watch public/styles -e css",
     "fetch-reddit": "node ./getRedditData",
     "fetch": "npm run fetch-reddit",
-    "build-helpers": "babel ./public/js/helpers --presets babel-preset-es2015 | uglifyjs - -o ./public/dist/helpers.min.js",
-    "build-controllers": "babel ./public/js/controllers --presets babel-preset-es2015 | uglifyjs - -o ./public/dist/controllers.min.js",
-    "build-directives": "babel ./public/js/directives --presets babel-preset-es2015 | uglifyjs - -o ./public/dist/directives.min.js",
     "build-js": "babel ./public/js --presets babel-preset-es2015 -o ./public/dist/bundle.js && uglifyjs ./public/dist/bundle.js -o ./public/dist/bundle.js --source-map ./public/dist/bundle.map --source-map-url bundle.map",
-    "build-css": "cat ./public/styles/index.css ./public/styles/template.css | cleancss -o ./public/dist/styles/styles.min.css",
+    "build-css": "cat ./public/styles/template.css ./public/styles/index.css | cleancss -o ./public/dist/styles/styles.min.css",
     "build": "concurrently 'npm run build-css' 'npm run build-js'"
   },
   "repository": {

@@ -39,3 +39,4 @@ jspm_packages
 # Fetched data
 data/*.json
 data/csv
+public/dist
