@@ -10,24 +10,36 @@
 	<body>
 		<section id="postapp" ng-controller="PostCtrl">
 			<header id="header">
+				<div ng-if="user === null" class="button log-in" ng-click="signInWithGoogle()">Log in to edit</div>
+				<div ng-if="user" class="button log-in" ng-click="signOut()">Logout {{user.displayName}}</div>
 				<h1>MakingSense</h1>
 				<form id="post-form" ng-submit="addPostFromUrl()" ng-if="user">
-					<input class="input wide" type="url" placeholder="Import post by url" ng-model="$parent.$parent.newPostUrl" ng-if="user">
+					<input class="input wide" type="url" placeholder="Import post by url" ng-model="$parent.newPostUrl">
 				</form>
 				<div class="search-posts-container">
 					<input class="input wide" type="text" placeholder="Search posts" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
 					<input type="button" class="clear-search" ng-if="searchQuery" ng-click="resetSearchQuery()" value="×" />
 				</div>
-				<div class="flex-row flex-align-end buttons-row">
-					<div ng-if="user !== null" class="button ocean self-align-start" ng-click="importNewPosts()">Import all new posts</div>
-					<div ng-if="user === null" class="button ocean self-align-start" ng-click="signInWithGoogle()">Log in to edit</div>
-					<div ng-if="user !== null" class="button ocean self-align-start" ng-click="signOut()">Logout {{user.displayName}}</div>
+				<div class="flex-row flex-align-end buttons-row" ng-if="user">
+					<div class="button ocean self-align-start" ng-click="importNewPosts()">Import all new posts</div>
 					<label class="input toggle-all">Toggle all:</label>
 					<div class="checkbox checkbox-markall" ng-class="{'markall-active': allMarked === true}" ng-model="allMarked" ng-click="markAll(allMarked)"></div>
 					<div class="checkbox checkbox-hideall" ng-class="{'hideall-active': allHidden === true}" ng-model="allHidden" ng-click="hideAll(allHidden)"></div>
 				<div>
 			</header>
 			<section id="main" ng-show="totalCount" ng-cloak>
+				<footer id="footer" ng-show="totalCount" ng-cloak>
+				<span id="post-count"><strong>{{remainingCount}}</strong>
+					<ng-pluralize count="remainingCount" when="{ one: 'post unfiled', other: 'posts unfiled' }"></ng-pluralize>
+				</span>
+				<ul id="filters">
+					<li><a ng-class="{selected: location.path() == '/unfiled'} " href="#/unfiled">Unfiled</a></li>
+					<li><a ng-class="{selected: location.path() == '/'}" href="#/">Testimonies</a></li>
+					<li><a ng-class="{selected: location.path() == '/hidden'}" href="#/hidden">Hidden</a></li>
+					<li><a ng-class="{selected: location.path() == '/all'}" href="#/all">All</a></li>
+				</ul>
+				<button id="clear-completed" ng-click="clearCompletedPosts()" ng-show="completedCount">Clear completed</button>
+			</footer>
 				<ul id="post-list">
 					<li ng-repeat="post in posts | filter : search | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
 						<div class="view data-card">
@@ -48,22 +60,11 @@
 				</ul>
 			</section>
 			<footer id="footer" ng-show="totalCount" ng-cloak>
-				<span id="post-count"><strong>{{remainingCount}}</strong>
-					<ng-pluralize count="remainingCount" when="{ one: 'post unfiled', other: 'posts unfiled' }"></ng-pluralize>
-				</span>
 				<ul id="filters">
-					<li>
-						<a ng-class="{selected: location.path() == '/unfiled'} " href="#/unfiled">Unfiled</a>
-					</li>
-					<li>
-						<a ng-class="{selected: location.path() == '/'}" href="#/">Testimonies</a>
-					</li>
-					<li>
-						<a ng-class="{selected: location.path() == '/hidden'}" href="#/hidden">Hidden</a>
-					</li>
-					<li>
-						<a ng-class="{selected: location.path() == '/all'}" href="#/all">All</a>
-					</li>
+					<li><a ng-class="{selected: location.path() == '/unfiled'} " href="#/unfiled">Unfiled</a></li>
+					<li><a ng-class="{selected: location.path() == '/'}" href="#/">Testimonies</a></li>
+					<li><a ng-class="{selected: location.path() == '/hidden'}" href="#/hidden">Hidden</a></li>
+					<li><a ng-class="{selected: location.path() == '/all'}" href="#/all">All</a></li>
 				</ul>
 				<button id="clear-completed" ng-click="clearCompletedPosts()" ng-show="completedCount">Clear completed</button>
 			</footer>

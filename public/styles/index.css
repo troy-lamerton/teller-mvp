@@ -1,9 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,500);
+
 body {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
 
   line-height: normal;
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+header {
+  overflow: hidden;
 }
 
 div.search-posts-container {
@@ -105,10 +112,6 @@ li a:hover {
 .hideall-active {
   background-color: #db4343;
 }
-.button.ocean {
-  color: #fff;
-  background: #2b90d9;
-}
 .button {
   display: flex;
   justify-content: center;
@@ -146,8 +149,15 @@ li a:hover {
   outline: 1px dotted #959595;
   outline-offset: -4px;
 }
-.self-align-start {
-  margin-right: auto;
+.button.ocean {
+  color: #fff;
+  background: #2b90d9;
+}
+.button.log-in {
+  color: #202129;
+  background-color: #edeeee;
+  width: 100px;
+  margin: 10px 10px 0 auto;
 }
 
 .red {

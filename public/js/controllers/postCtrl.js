@@ -212,7 +212,9 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	}
 
 	$scope.removePost = function (post) {
-		$scope.posts.$remove(post);
+		if (window.confirm(`${post.title} will be removed from the database`)) {
+			$scope.posts.$remove(post);
+		}
 	};
 
 	$scope.clearCompletedPosts = function () {
