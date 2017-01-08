@@ -185,7 +185,7 @@ label[for='toggle-all'] {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
 }
 
-#post-list li .toggle:checked:after {
+#post-list li .toggle-active:after {
 	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
@@ -206,8 +206,7 @@ label[for='toggle-all'] {
 }
 
 #post-list li.completed a {
-	color: #d9d9d9;
-	text-decoration: line-through;
+	color: #3f9b89;
 }
 
 #post-list li .destroy {
@@ -315,18 +314,4 @@ html #clear-completed:active {
 	text-decoration: none;
 	cursor: pointer;
 	position: relative;
-}
-
-#clear-completed:hover {
-	text-decoration: underline;
-}
-
-@media (max-width: 430px) {
-	#footer {
-		height: 50px;
-	}
-
-	#filters {
-		bottom: 10px;
-	}
 }

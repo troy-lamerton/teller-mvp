@@ -11,6 +11,13 @@ div.search-posts-container {
   white-space: nowrap
 }
 
+li a {
+  text-decoration: none;
+}
+li a:hover {
+  text-decoration: underline;
+}
+
 .clear-search {
   margin-left: -47px;
   display: inline;

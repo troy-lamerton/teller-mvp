@@ -32,14 +32,13 @@
 					<li ng-repeat="post in posts | filter : search | postFilter" ng-class="{completed: post.marked, editing: post == editedPost}">
 						<div class="view data-card">
 				      <div class="flex-row">
-								<a ng-href="{{!post.marked ? post.url : ''}}" target="_blank" rel="noopener" --backup-ng-dblclick="editPost(post)" ng-class="{'post-title': true, highlighted: post.highlighted, red: post.hidden}">{{post.title}}</a>
+								<a href="{{post.url}}" target="_blank" rel="noopener" --backup-ng-dblclick="editPost(post)" ng-class="{'post-title': true, highlighted: post.highlighted, red: post.hidden}">{{post.title}}</a>
 				        <div class="post-buttons">
-									<input class="toggle" type="checkbox" ng-model="post.marked" ng-click="toggle($index, 'marked')">
+									<div class="toggle" ng-class="{'toggle-active': post.marked}" ng-click="toggle(post, 'marked')"></div>
 									<button class="destroy" ng-click="toggle(post, 'hidden')" ng-right-click="removePost(post)" />
 								</div>
 				      </div>
 				      <div class="flex-row flex-align-start">
-				        <!-- ).format('DD MMM YYYY h:mm a') -->
 				        <span class="checkbox checkbox-post-preview" ng-class="{'post-preview-active': showPreview[post.id]}" ng-click="togglePreview(post.id)">=</span>
 				        <span class="small-text post-submitted">Submitted <span title={{post.createdAtDate.toString()}}>{{post.createdAtDate | date : 'dd MMM yyyy'}}</span> by <span class="post-author" title="Show all posts by {{post.author}}" ng-click="searchAllAuthorPosts(post.author)">{{post.author}}</span></span>
 				      </div>
@@ -57,13 +56,13 @@
 						<a ng-class="{selected: location.path() == '/unfiled'} " href="#/unfiled">Unfiled</a>
 					</li>
 					<li>
-						<a ng-class="{selected: location.path() == '/marked'}" href="#/marked">Marked</a>
+						<a ng-class="{selected: location.path() == '/'}" href="#/">Testimonies</a>
 					</li>
 					<li>
 						<a ng-class="{selected: location.path() == '/hidden'}" href="#/hidden">Hidden</a>
 					</li>
 					<li>
-						<a ng-class="{selected: location.path() == '/'}" href="#/">All</a>
+						<a ng-class="{selected: location.path() == '/all'}" href="#/all">All</a>
 					</li>
 				</ul>
 				<button id="clear-completed" ng-click="clearCompletedPosts()" ng-show="completedCount">Clear completed</button>

@@ -225,7 +225,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 
 	$scope.searchAllAuthorPosts = function (author) {
 		$scope.setSearchQuery(author);
-		$location.path('/');
+		$location.path('/all');
 	}
 
 	$scope.setSearchQuery = function (query) {

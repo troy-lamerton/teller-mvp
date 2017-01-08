@@ -14,19 +14,19 @@ postchooser.filter('postFilter', function ($location) {
 		var filtered = {};
 		var path = $location.path();
 		angular.forEach(input, function (post, id) {
-			if (path === '/unfiled') {
-				if (!post.marked && !post.hidden) {
+			if (path === '/') {
+				if (post.marked) {
 					filtered[id] = post;
 				}
-			} else if (path === '/marked') {
-				if (post.marked) {
+			} else if (path === '/unfiled') {
+				if (!post.marked && !post.hidden) {
 					filtered[id] = post;
 				}
 			} else if (path === '/hidden') {
 				if (post.hidden) {
 					filtered[id] = post;
 				}
-			} else {
+			} else if (path === '/all') {
 				filtered[id] = post;
 			}
 		});
