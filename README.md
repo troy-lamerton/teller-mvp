@@ -1,23 +1,29 @@
-# Data Filtering Tool
+# Reddit Post Archive Tool
 
-A web user interface for filtering a JSON array.
-Give the app your JSON and array and start selecting what to keep and what to delete
+A web interface for selecting and displaying Reddit posts from your favourite subreddit.
+This project is setup to keep track of posts on the [r/MakingSense](https://www.reddit.com/r/makingsense) subreddit.
 
-### Installation
+You can [see it in action here](http://troy-lamerton.github.io/data-filtering-tool/)
 
-```git clone <url>```
-```npm install```
-```npm install -g nodemon``` 
+### Running on your machine
+~~~~
+git clone https://github.com/troy-lamerton/data-filtering-tool.git
+npm install
+npm start
+~~~~
 
-### Notes
+If you get errors, you may need to globally install some dependencies
+```npm install -g concurrently nodemon babel-cli budo clean-css```
 
-Seperation of concerns:
+To use your own Firebase database, replace the Firebase config `<script> var config = ... </script>` in the index.html file.
 
-Server ensures data is in a consistent format at all times. From initial fetching of data to giving
-the data to template for rendering.
+### Upcoming features
+- Dropdown to sort posts by Author, Title, Date
+- Improved design for mobile devices
+- Generate interesting graphs from the posts in the archive
 
-Templates just displays data, they are "dumb". --until further notice
-
-#### BUG
-Have to restart server to see changes in browser reflecting changes in raw.json file
-see hacky solution in views/renderPage.js
+### Possible future features
+- Give everyone the ability to import new posts
+- Form to request permission to edit
+  - It would need to be in a modal on the site
+  - Looking for a form tool that can email me when someone fills out the form - Google forms perhaps?
