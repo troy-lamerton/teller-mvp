@@ -1,4 +1,4 @@
-/*global postchooser, angular, Firebase */
+/*global postchooser, angular, firebase */
 'use strict';
 
 /**
@@ -122,6 +122,7 @@ postchooser.controller('PostCtrl', function PostCtrl(
 			if (queryStringStart > -1) {
 				newPostUrl = newPostUrl.slice(0, queryStringStart);
 			}
+			$scope.fetching = true;
 			fetch(newPostUrl + '.json')
 				.then(function(res) {
 					res.json().then(function(json) {
@@ -140,10 +141,13 @@ postchooser.controller('PostCtrl', function PostCtrl(
 						// keep post content in memory so we can show it quicker 
 						$scope.postsContent[id] = selftext;
 						$scope.newPostUrl = '';
+						$scope.fetching = false;
 						$scope.$apply();
 					})
 				})
 				.catch(err => {
+					$scope.fetching = false;
+					$scope.$apply();
 					console.error('Error fetching reddit data', err);
 				});
 		} else {
@@ -152,8 +156,11 @@ postchooser.controller('PostCtrl', function PostCtrl(
 	};
 
 	$scope.importNewPosts = function () {
+		$scope.fetching = true;
 		window.fetchNewPosts('MakingSense')
 			.then(newPosts => {
+				$scope.fetching = false;
+				$scope.$apply();
 				if (newPosts.length === 0) {
 					console.info('No new posts on Reddit');
 					return;
@@ -173,6 +180,8 @@ postchooser.controller('PostCtrl', function PostCtrl(
 				console.info(`Fetched ${newPosts.length} new posts`);
 			})
 			.catch(err => {
+				$scope.fetching = false;
+				$scope.$apply();
 				console.error('Import new posts error:', err);
 			});
 	}

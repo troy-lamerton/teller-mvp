@@ -75,6 +75,7 @@ li a:hover {
 }
 .buttons-row {
   max-height: none;
+  height: 42px;
   padding: 0 6px 0 45px;
 }
 .toggle-all {
@@ -152,6 +153,7 @@ li a:hover {
 .button.ocean {
   color: #fff;
   background: #2b90d9;
+  margin-right: auto;
 }
 .button.log-in {
   color: #202129;

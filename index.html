@@ -19,8 +19,11 @@
 					<input class="input wide" type="text" placeholder="Search posts" ng-model="searchQuery" ng-change="resetCheckboxes()" autofocus>
 					<input type="button" class="clear-search" ng-if="searchQuery" ng-click="resetSearchQuery()" value="×" />
 				</div>
-				<div class="flex-row flex-align-end buttons-row" ng-if="user">
-					<div class="button ocean self-align-start" ng-click="importNewPosts()">Import all new posts</div>
+				<div class="flex-row flex-align-end buttons-row" ng-show="user">
+					<div ng-show="!fetching" class="button ocean self-align-start" ng-click="importNewPosts()">Import all new posts</div>
+					<div ng-show="fetching" class="loader-container">
+						<div class="loader"></div>
+					</div>
 					<label class="input toggle-all">Toggle all:</label>
 					<div class="checkbox checkbox-markall" ng-class="{'markall-active': allMarked === true}" ng-model="allMarked" ng-click="markAll(allMarked)"></div>
 					<div class="checkbox checkbox-hideall" ng-class="{'hideall-active': allHidden === true}" ng-model="allHidden" ng-click="hideAll(allHidden)"></div>
