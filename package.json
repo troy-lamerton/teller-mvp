@@ -1,16 +1,16 @@
 {
-  "name": "data-filtering-tool",
+  "name": "teller-mvp",
   "version": "1.0.0",
-  "description": "A web interface to curate reddit posts, decide what to keep and what to throw away. Uses firebase realtime database.",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run watch' 'npm run serve'",
     "serve": "budo --live --watch-glob '**/*.{html,css,js}'",
     "watch": "concurrently 'npm run watch-js' 'npm run watch-css'",
-    "watch-js": "nodemon --exec 'npm run build-js' --watch public/js",
+    "watch-js": "nodemon --exec 'npm run build-js' --watch public/*.js",
     "watch-css": "nodemon --exec 'npm run build-css' --watch public/styles -e css",
-    "build-js": "babel ./public/js --presets babel-preset-es2015 -o ./public/dist/bundle.js && uglifyjs ./public/dist/bundle.js -o ./public/dist/bundle.js --source-map ./public/dist/bundle.map --source-map-url bundle.map",
-    "build-css": "cat ./public/styles/loader.css ./public/styles/template.css ./public/styles/index.css | cleancss -o ./public/dist/styles/styles.min.css",
+    "build-js": "babel ./public/app.js --presets babel-preset-es2015 -o ./dist/bundle.js && uglifyjs ./dist/bundle.js -o ./dist/bundle.js --source-map ./dist/bundle.map --source-map-url bundle.map",
+    "build-css": "cleancss ./public/styles/index.css -o ./dist/styles/styles.min.css",
     "build": "concurrently 'npm run build-css' 'npm run build-js'"
   },
   "repository": {
@@ -25,10 +25,6 @@
   ],
   "author": "Troy Lamerton, Rory Wagner",
   "license": "UNLICENSE",
-  "bugs": {
-    "url": "https://github.com/troy-lamerton/data-filtering-tool/issues"
-  },
-  "homepage": "https://github.com/troy-lamerton/data-filtering-tool#readme",
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.17.1"
