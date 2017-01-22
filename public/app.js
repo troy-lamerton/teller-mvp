@@ -8,7 +8,7 @@ app.config(function($routeProvider) {
 			templateUrl : 'public/intro.html',
 			controller  : 'IntroCtrl'
 		})
-		.when('/expenses', {
+		.when('/spending', {
 			templateUrl : 'public/expenses.html',
 			controller  : 'ExpensesCtrl'
 		})
@@ -18,9 +18,12 @@ app.config(function($routeProvider) {
 		});
 });
 
-app.controller('MainCtrl', function($scope) {
+app.controller('MainCtrl', function($scope, $location) {
 	// create a message to display in our view
 	$scope.message = 'Welcome to Teller!';
+	$scope.isActiveTab = function(route) {
+        return route === $location.path();
+    }
 });
 
 // create the controller and inject Angular's $scope

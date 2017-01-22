@@ -12,14 +12,6 @@ header, footer {
     text-align: center;
 }
 
-nav {
-    float: left;
-    max-width: 160px;
-    margin: 0;
-    padding: 1em;
-}
-
-
 div.view {
     width: 900px;
     margin-left: auto;
@@ -27,7 +19,6 @@ div.view {
     padding: 1em;
     overflow: hidden;
     background: #FFFFFF;
-    border: 
 }
 
 h1 {
@@ -38,4 +29,8 @@ h1 {
 p {
     font-size: 50px;
     font-style: medium;
+}
+
+.tab > .active {
+    border-bottom: 3px solid #3F51B5;
 }
