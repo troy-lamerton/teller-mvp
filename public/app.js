@@ -33,7 +33,7 @@ app.controller('IntroCtrl', function($scope) {
 });
 
 app.controller('ExpensesCtrl', function($scope) {
-	$scope.message = 'Add your income and expenses below';
+	$scope.message = 'Add your income and expenses';
 });
 
 app.controller('DataDisplayCtrl', function($scope) {

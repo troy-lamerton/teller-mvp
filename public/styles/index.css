@@ -4,8 +4,26 @@ div.app {
     height: 100%;
 }
 
-header, footer {
-    padding: .2em;
+header {
+    padding: .1em;
+    margin-bottom: 10px;
+    color: white;
+    background-color: #03A9F4;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    background-color:white;
+    text-align: center;
+}
+
+nav ul {
+    display: inline-block;
+}
+
+footer {
+    padding: .1em;
     color: white;
     background-color: #03A9F4;
     clear: left;
@@ -13,24 +31,46 @@ header, footer {
 }
 
 div.view {
-    width: 900px;
+    width: 1100px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    padding: 1em;
+    padding-top: 1.5em;
+    padding-bottom: 3em;
     overflow: hidden;
     background: #FFFFFF;
 }
 
 h1 {
-    font-size: 150px;
+    font-size: 80px;
     font-style: black;
+}
+
+h2 {
+    font-size: 70px;
+    text-align: center;
 }
 
 p {
     font-size: 50px;
     font-style: medium;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 20px;
+    padding-bottom: 50px;
 }
 
 .tab > .active {
-    border-bottom: 3px solid #3F51B5;
+    border-bottom: 3px solid #FFFFFF;
+    color: black;
 }
+
+.tabs .tab a {
+    color: #FFFFFF;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    color: #FFFFFF
+}
+
