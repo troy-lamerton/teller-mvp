@@ -26,8 +26,8 @@ footer {
     padding: .1em;
     color: white;
     background-color: #03A9F4;
-    clear: left;
     text-align: center;
+    margin-bottom: 0px;
 }
 
 div.view {
@@ -57,7 +57,7 @@ p {
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
-    padding-top: 20px;
+    padding-top: 5px;
     padding-bottom: 50px;
 }
 
