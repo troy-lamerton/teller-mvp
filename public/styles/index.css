@@ -5,12 +5,12 @@ div.app {
 }
 
 header {
-    padding: .1em;
-    margin-bottom: 10px;
+    padding: em;
+    margin-bottom: 20px;
     color: white;
     background-color: #03A9F4;
-    clear: left;
     text-align: center;
+    position: relative;
 }
 
 nav {
@@ -19,10 +19,7 @@ nav {
     width: 1100px;
     margin-left: auto;
     margin-right: auto;
-}
-
-nav ul {
-    display: inline-block;
+    padding-bottom: 0;
 }
 
 footer {
@@ -35,7 +32,6 @@ footer {
 
 div.view {
     width: 1100px;
-    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     padding-top: 1.5em;
@@ -45,6 +41,7 @@ div.view {
 }
 
 h1 {
+    margin-top: 0px;
     font-size: 80px;
     font-style: black;
 }
