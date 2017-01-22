@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/troy-lamerton/data-filtering-tool.git"
+    "url": "git+https://github.com/troy-lamerton/teller-mvp.git"
   },
   "keywords": [
     "angular",
