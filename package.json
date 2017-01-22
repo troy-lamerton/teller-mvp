@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run watch' 'npm run serve'",
-    "serve": "budo --live --watch-glob '**/*.{html,css,js}'",
+    "serve": "python -m SimpleHTTPServer",
     "watch": "concurrently 'npm run watch-js' 'npm run watch-css'",
     "watch-js": "nodemon --exec 'npm run build-js' --watch public/*.js",
     "watch-css": "nodemon --exec 'npm run build-css' --watch public/styles -e css",
     "build-js": "babel ./public/app.js --presets babel-preset-es2015 -o ./dist/bundle.js && uglifyjs ./dist/bundle.js -o ./dist/bundle.js --source-map ./dist/bundle.map --source-map-url bundle.map",
-    "build-css": "cleancss ./public/styles/index.css -o ./dist/styles/styles.min.css",
+    "build-css": "cleancss ./public/styles/index.css --output ./dist/styles/styles.min.css",
     "build": "concurrently 'npm run build-css' 'npm run build-js'"
   },
   "repository": {

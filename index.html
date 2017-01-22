@@ -1,23 +1,29 @@
 <!doctype html>
-<html lang="en" ng-app="postchooser" data-framework="firebase">
+<html lang="en" ng-app="teller">
 	<head>
 		<meta charset="utf-8">
 		<title>Teller</title>
 		<link rel="stylesheet" href="dist/styles/styles.min.css">
 	</head>
 	<body>
-		<section ng-controller="TellerCtrl">
+		<section ng-controller="MainCtrl">
 
 			<header>
 				<h1>Teller</h1>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#expenses">Expenses</a></li>
+				</ul>
 			</header>
 
-			<section id="main">
-				
-			</section>
+			<h2>Main page!</h2>
+			<div id="main">
+				<div ng-view></div>
+			</div>
 
 		</section>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
 		<script src="dist/bundle.js"></script>
 	</body>
 </html>

@@ -1,24 +1,8 @@
 body {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-
   line-height: normal;
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 header {
   overflow: hidden;
-}
-
-div.search-posts-container {
-  display: flex;
-  white-space: nowrap
-}
-
-li a {
-  text-decoration: none;
-}
-li a:hover {
-  text-decoration: underline;
 }
