@@ -1,6 +1,12 @@
 <div class="flex">
   <div>
     <h2>Income</h2>
+    <div>
+      <div ng-repeat="model in expenses">
+        <span>{{model.name}}</span>
+        <span>{{model.value}}</span>
+      </div>
+    </div>
   </div>
 
   <div class="v-divider"></div>

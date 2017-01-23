@@ -10,7 +10,7 @@ app.config(function($routeProvider) {
 		})
 		.when('/spending', {
 			templateUrl : 'public/expenses.html',
-			controller  : 'ExpensesCtrl'
+			controller  : 'SpendingCtrl'
 		})
 		.when('/result', {
 			templateUrl : 'public/dataDisplay.html',
@@ -26,16 +26,69 @@ app.controller('MainCtrl', function($scope, $location) {
   }
 });
 
+app.service('recordService', function() {
+	/* Each record should follow this format
+		{
+			name: 'Weekly food',
+			amount: 85
+		}
+	*/
+
+  const records = {
+  	expenses: [],
+    incomes: [],
+  };
+
+  const getRecords = (type) => records[category];
+
+  const addRecord = (category, record) => {
+    records[category].push(record);
+
+    /*
+    if (category === 'incomes') {
+    	records.incomes.push({name: 'Rent', amount: 100});
+    } else {
+    	records.expenses.push({name: 'food', amount: 120});
+    } 
+    */
+  };
+
+  const deleteRecord = (category, indexOfRecord) => {
+  	records[category].splice(indexOfRecord, 1);
+  }
+
+  const updateRecord = (category, updatedRecord, indexOfRecord) => {
+    records[category][indexOfRecord] = updatedRecord;
+  }
+
+  return {
+    getRecords,
+    addRecord,
+    deleteRecord,
+    updateRecord,
+  };
+
+});
 // create the controller and inject Angular's $scope
 app.controller('IntroCtrl', function($scope) {
 	// create a message to display in our view
 	$scope.message = 'Welcome to Teller on the intro page!';
 });
 
-app.controller('ExpensesCtrl', function($scope) {
-	$scope.message = 'Add your income and expenses';
+app.controller('SpendingCtrl', function($scope, recordService) {
+	$scope.addExpense = (record) => {
+		recordService.addRecord('expenses', record);
+	}
+	$scope.updateRecord = (category, record, indexOfRecord) => {
+		recordService.updateRecord(category, record, indexOfRecord);
+	}
+	$scope.addIncome = (record) => {
+		recordService.addRecord('incomes', record);
+	}
 });
 
 app.controller('DataDisplayCtrl', function($scope) {
 	$scope.message = 'Look at all the pretty data...';
+
+	// get records data from the service
 });
