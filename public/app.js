@@ -35,8 +35,13 @@ app.service('recordService', function() {
 	*/
 
   const records = {
-  	expenses: [],
-    incomes: [],
+  	expenses: [
+      {name: 'food', amount: 85},
+      {name: 'movie', amount: 10}
+    ],
+    incomes: [
+      {name: 'rental property', amount: 120}
+    ]
   };
 
   const getRecords = (type) => records[category];
@@ -76,6 +81,9 @@ app.controller('IntroCtrl', function($scope) {
 });
 
 app.controller('SpendingCtrl', function($scope, recordService) {
+  $scope.expenses = recordService.getRecords('expenses');
+  $scope.incomes = recordService.getRecords('incomes');
+
 	$scope.addExpense = (record) => {
 		recordService.addRecord('expenses', record);
 	}
