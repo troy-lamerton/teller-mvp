@@ -5,15 +5,15 @@ var app = angular.module('teller', ['ngRoute']);
 app.config(function($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl : 'public/intro.html',
+			templateUrl : 'views/intro.html',
 			controller  : 'IntroCtrl'
 		})
 		.when('/spending', {
-			templateUrl : 'public/expenses.html',
+			templateUrl : 'views/expenses.html',
 			controller  : 'SpendingCtrl'
 		})
 		.when('/result', {
-			templateUrl : 'public/dataDisplay.html',
+			templateUrl : 'views/dataDisplay.html',
 			controller  : 'DataDisplayCtrl'
 		});
 });
