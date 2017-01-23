@@ -19,6 +19,10 @@ nav {
 
   background-color: #fff;
   box-shadow: none;
+  overflow: hidden;
+}
+nav ul {
+  overflow: hidden;
 }
 .tabs .tab a {
   color: #fff;

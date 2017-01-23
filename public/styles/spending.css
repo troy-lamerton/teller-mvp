@@ -1,0 +1,9 @@
+.v-divider {
+  width:1px;
+  background-color: grey;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-around;
+}
