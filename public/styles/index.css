@@ -1,8 +1,8 @@
 header {
   margin-bottom: 20px;
-  color: white;
-  background-color: #03A9F4;
+  color: #fff;
   text-align: center;
+  background-color: #03A9F4;
 }
 
 
@@ -13,10 +13,18 @@ nav {
 
   text-align: center;
 
-  background-color: white;
+  background-color: #fff;
   box-shadow: none;
 }
-
+.tabs .tab a {
+  color: #fff;
+}
+.tabs .tab a:hover, .tabs .tab a.active {
+  color: #fff
+}
+.tabs div.indicator {
+  background-color: #fff !important;
+}
 
 h1 {
   margin-top: 0px;
@@ -29,7 +37,6 @@ h2 {
   font-size: 40px;
   text-align: center;
 }
-
 p {
   padding-top: 5px;
   padding-bottom: 50px;
@@ -40,18 +47,6 @@ p {
   line-height: normal;
 }
 
-.tab > .active {
-  border-bottom: 2px solid #fff;
-}
-
-.tabs .tab a {
-  color: #fff;
-}
-
-.tabs .tab a:hover, .tabs .tab a.active {
-  color: #fff
-}
-
 
 footer {
   width: 100%;
@@ -60,7 +55,7 @@ footer {
   bottom: 0;
   left: 0;
 
-  color: white;
+  color: #fff;
   text-align: center;
 
   background-color: #03A9F4;
