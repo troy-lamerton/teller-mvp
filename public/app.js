@@ -44,7 +44,7 @@ app.service('recordService', function() {
     ]
   };
 
-  const getRecords = (type) => records[category];
+  const getRecords = (category) => records[category];
 
   const addRecord = (category, record) => {
     records[category].push(record);
