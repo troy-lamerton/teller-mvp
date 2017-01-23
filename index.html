@@ -17,24 +17,25 @@
   </header>
 
   <section ng-controller="MainCtrl" class="container">
-    <nav>
-      <div class="nav-wrapper">
-        <ul class="tabs light-blue tabs-fixed-width">
-          <li class="tab white-text"><a ng-click="changeView()" href="#">Welcome</a></li>
-          <li class="tab white-text"><a ng-click="changeView('spending')" href="#spending">Spending</a></li>
-          <li class="tab white-text"><a ng-click="changeView('result')" href="#result">Analysis</a></li>
-        </ul>
-      </div>
-    </nav>
 
     <div class="col s12 m6 view">
       <div class="card white z-depth-3">
+
+        <nav>
+          <div class="nav-wrapper">
+            <ul class="tabs light-blue tabs-fixed-width">
+              <li class="tab white-text"><a ng-click="changeView()" href="#">Welcome</a></li>
+              <li class="tab white-text"><a ng-click="changeView('spending')" href="#spending">Spending</a></li>
+              <li class="tab white-text"><a ng-click="changeView('result')" href="#result">Analysis</a></li>
+            </ul>
+          </div>
+        </nav>
+
         <div class="card-content light-blue-text">
 
           <div ng-view></div>
 
           <a class="btn-floating purple darken-4 btn-large waves-effect waves right"><i class="material-icons">add</i></a>
-
         </div>
       </div>
     </div>

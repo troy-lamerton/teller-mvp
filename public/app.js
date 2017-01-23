@@ -22,7 +22,7 @@ app.controller('MainCtrl', function($scope, $location) {
 	// create a message to display in our view
 	$scope.message = 'Welcome to Teller!';
 	$scope.changeView = (view = '') => {
-		$location.path(view)
+		$location.path(view);
   }
 });
 
