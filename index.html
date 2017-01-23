@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="teller">
 <head>
+  <base href="/">
   <meta charset="utf-8">
   <title>Teller</title>
   <!--Import Google Icon Font-->
@@ -19,9 +20,9 @@
     <nav>
       <div class="nav-wrapper">
         <ul class="tabs light-blue tabs-fixed-width">
-          <li class="tab white-text"><a ng-class="{active: isActiveTab('/')}" href="#">Welcome</a></li>
-          <li class="tab white-text"><a ng-class="{active: isActiveTab('/spending')}" href="#spending">Spending</a></li>
-          <li class="tab white-text"><a ng-class="{active: isActiveTab('/result')}" href="#result">Analysis</a></li>
+          <li class="tab white-text"><a ng-click="changeView()" href="#">Welcome</a></li>
+          <li class="tab white-text"><a ng-click="changeView('spending')" href="#spending">Spending</a></li>
+          <li class="tab white-text"><a ng-click="changeView('result')" href="#result">Analysis</a></li>
         </ul>
       </div>
     </nav>

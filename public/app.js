@@ -21,9 +21,9 @@ app.config(function($routeProvider) {
 app.controller('MainCtrl', function($scope, $location) {
 	// create a message to display in our view
 	$scope.message = 'Welcome to Teller!';
-	$scope.isActiveTab = function(route) {
-        return route === $location.path();
-    }
+	$scope.changeView = (view = '') => {
+		$location.path(view)
+  }
 });
 
 // create the controller and inject Angular's $scope
