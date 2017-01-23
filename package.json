@@ -14,8 +14,8 @@
     "build-js": "babel ./public/app.js --presets babel-preset-es2015 -o ./dist/bundle.js && uglifyjs ./dist/bundle.js -o ./dist/bundle.js --source-map ./dist/bundle.map --source-map-url bundle.map",
     "build-css": "cat ./public/styles/index.css ./public/styles/spending.css | cleancss --output ./dist/styles/styles.min.css",
     "build": "concurrently 'npm run copy-html' 'npm run build-css' 'npm run build-js'",
-    "pages": "gh-pages -d dist",
-    "deploy": "npm run build && npm run pages"
+    "surge": "surge --project ./dist --domain teller-mvp.surge.sh",
+    "deploy": "npm run build && npm run surge"
   },
   "repository": {
     "type": "git",
