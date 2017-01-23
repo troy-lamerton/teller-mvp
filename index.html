@@ -7,12 +7,11 @@
   <link rel="stylesheet" href="dist/styles/styles.min.css">
 </head>
 <body>
-  <section ng-controller="MainCtrl">
+  <header>
+    <h1>Teller</h1>
+  </header>
 
-    <header>
-      <h1>Teller</h1>
-    </header>
-
+  <section ng-controller="MainCtrl" class="container">
     <nav>
       <div class="nav-wrapper">
         <ul class="tabs light-blue tabs-fixed-width">
@@ -22,9 +21,6 @@
         </ul>
       </div>
     </nav>
-
-<!--     <div class="card-action white-text">
-    </div> -->
 
     <div class="col s12 m6 view">
       <div class="card white z-depth-3">
@@ -37,15 +33,17 @@
         </div>
       </div>
     </div>
-
-
-
-    <footer class="page-footer light-blue">
-        © 2017 Copyright
-    </footer>
-
-
   </section>
+
+  <footer class="page-footer light-blue">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2017 Copyright
+      <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      </div>
+    </div>
+  </footer>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
