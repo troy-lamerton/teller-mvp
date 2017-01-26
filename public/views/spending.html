@@ -1,0 +1,31 @@
+<div class="flex">
+  <div class="category-container">
+    <h2>Income</h2>
+  </div>
+
+  <div class="v-divider"></div>
+
+  <div class="category-container">
+    <h2>Expenses</h2>
+    <div>
+      <ul class="collection">
+        <li ng-repeat="record in expenses" class="collection-item record">
+          <div class="content flex">
+            <span ng-show="!record.editing" class="text">{{record.name}}</span>
+            <span class="amount teal-text text-lighten-1">{{record.amount}}</span>
+            <a class="remove-button" ng-click="removeRecord($index)"><i class="material-icons">clear</i></a>
+          </div>
+        </li>
+        <div class="collection-item">
+          <div class="flex inputs">
+            <input class="record-text" type="text" placeholder="Describe the expense" />
+            <input class="record-amount" type="number" placeholder="$" />
+            <a class="remove-button"><i class="material-icons">clear</i></a>
+          </div>
+        </div>
+        <div class="collection-item"><div>Add expense...</div></div>
+      </ul>
+    </div>
+  </div>
+</div>
+

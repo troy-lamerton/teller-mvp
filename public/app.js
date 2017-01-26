@@ -9,7 +9,7 @@ app.config(function($routeProvider) {
 			controller  : 'IntroCtrl'
 		})
 		.when('/spending', {
-			templateUrl : 'views/expenses.html',
+			templateUrl : 'views/spending.html',
 			controller  : 'SpendingCtrl'
 		})
 		.when('/result', {
@@ -36,8 +36,8 @@ app.service('recordService', function() {
 
   const records = {
   	expenses: [
-      {name: 'food', amount: 85},
-      {name: 'movie', amount: 10}
+      {name: 'Weekly food', amount: 85},
+      {name: 'Movie night', amount: 22}
     ],
     incomes: [
       {name: 'rental property', amount: 120}
@@ -93,6 +93,14 @@ app.controller('SpendingCtrl', function($scope, recordService) {
 	$scope.addIncome = (record) => {
 		recordService.addRecord('incomes', record);
 	}
+
+  $scope.editRecord = (category, index) => {
+    if (category === 'expenses') {
+      $scope.expenses[index].editing = true;
+    } else if (category === 'incomes') {
+      $scope.incomes[index].editing = true;
+    }
+  }
 });
 
 app.controller('DataDisplayCtrl', function($scope) {

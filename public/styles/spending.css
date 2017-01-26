@@ -1,9 +1,47 @@
+.flex {
+  display: flex;
+}
+
+.category-container {
+  flex-basis: 46%
+}
+.category-container > h2 {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
 .v-divider {
-  width:1px;
+  width: 1px;
+  margin: 0 4%;
   background-color: grey;
 }
 
-.flex {
-  display: flex;
-  justify-content: space-around;
+.record .content {
+  justify-content: space-between;
+}
+
+.record .inputs {
+  width: 100%;
+  align-items: center;
+}
+.record .inputs input {
+  font-size: inherit;
+  margin: 0;
+  height: 2.4rem;
+}
+.record .text {
+  flex-grow: 2;
+}
+.record .amount {
+  flex-basis: 18%;
+  color: #26a69a;
+}
+input.record .amount {
+  flex-basis: 25%;
+}
+.remove-button {
+  line-height: normal;
+  color: rgb(220, 90, 90);
+
+  cursor: pointer;
 }
