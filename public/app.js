@@ -32,7 +32,8 @@ app.controller('IntroCtrl', function($scope) {
 	$scope.message = 'Welcome to Teller on the intro page!';
 });
 
-app.controller('ExpensesCtrl', function($scope) {
+//user input-field scope added here 
+app.controller('ExpensesCtrl', function($scope) {   
 	$scope.message = 'Add your income and expenses';
 });
 
