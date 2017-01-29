@@ -1,28 +1,44 @@
 <div class="flex">
-  <div class="category-container">
+  <div class="category-container col s6">
     <h2>Income</h2>
-  </div>
-
-  <div class="v-divider"></div>
-
-  <div class="category-container">
-    <h2>Expenses</h2>
     <div>
       <ul class="collection">
-        <li ng-repeat="record in expenses" class="collection-item record">
-          <div class="content flex" ng-click="editRecord('expenses', $index)" ng-if="!record.editing">
+        <li ng-repeat="record in incomes" class="collection-item record">
+          <div class="content flex" ng-click="editRecord('incomes', $index)" ng-if="!record.editing">
             <span class="text">{{record.name}}</span>
-            <span ng-click="editRecord('expenses', $index, true)" class="amount teal-text text-lighten-1">{{record.amount}}</span>
+            <span ng-click="editRecord('incomes', $index, true)" class="amount teal-text text-lighten-1">{{record.amount}}</span>
           </div>
           <div class="flex inputs" ng-if="record.editing">
-            <input class="text" type="text" placeholder="Describe the expense" ng-model="record.name" ng-enter="updateRecord('expenses', $index)" />
-            <input class="amount" type="number" placeholder="$" ng-model="record.amount" ng-enter="updateRecord('expenses', $index)" />
+            <input class="text" type="text" placeholder="Describe the expense" ng-model="record.name" ng-enter="updateRecord('incomes', $index)" />
+            <input class="amount" type="number" placeholder="$" ng-model="record.amount" ng-enter="updateRecord('incomes', $index)" />
           </div>
-          <a class="remove-button" ng-click="deleteRecord('expenses', $index)"><i class="material-icons">clear</i></a>
+          <a class="remove-button" ng-click="deleteRecord('incomes', $index)"><i class="material-icons">clear</i></a>
         </li>
-        <div ng-click="newRecord('expenses')" class="collection-item"><div>Add expense...</div></div>
+        <div ng-click="newRecord('incomes')" class="collection-item"><div>Add expense...</div></div>
       </ul>
     </div>
+
+
+    <div class="v-divider"></div>
+
+    <div class="category-container col s6">
+      <h2>Expenses</h2>
+      <div>
+        <ul class="collection">
+        <li ng-repeat="record in expenses" class="collection-item record">
+        <div class="content flex" ng-click="editRecord('expenses', $index)" ng-if="!record.editing">
+              <span class="text">{{record.name}}</span>
+              <span ng-click="editRecord('expenses', $index, true)" class="amount teal-text text-lighten-1">{{record.amount}}</span>
+            </div>
+            <div class="flex inputs" ng-if="record.editing">
+            <input class="text" type="text" placeholder="Describe the expense" ng-model="record.name" ng-enter="updateRecord('expenses', $index)" />
+            <input class="amount" type="number" placeholder="$" ng-model="record.amount" ng-enter="updateRecord('expenses', $index)" />
+            </div>
+            <a class="remove-button" ng-click="deleteRecord('expenses', $index)"><i class="material-icons">clear</i></a>
+          </li>
+          <div ng-click="newRecord('expenses')" class="collection-item"><div>Add expense...</div></div>
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
 

@@ -49,12 +49,12 @@ app.service('recordService', function() {
 
   const records = {
   	expenses: [
-      {name: 'Weekly food', amount: 85},
+/*      {name: 'Weekly food', amount: 85},
       {name: 'Movie', amount: 22},
-      {name: '', amount: undefined}
+      {name: '', amount: undefined}*/
     ],
     incomes: [
-      {name: 'rental property', amount: 120}
+/*      {name: 'rental property', amount: 120}*/
     ]
   };
 
