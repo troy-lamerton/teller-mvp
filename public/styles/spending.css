@@ -16,6 +16,12 @@
   background-color: grey;
 }
 
+.h-divider {
+  width: 1px;
+  margin: 4 0%;
+  background-color: grey;
+}
+
 .record {
   display: flex;
   align-items: center;
