@@ -31,6 +31,7 @@
   "license": "UNLICENSE",
   "dependencies": {
     "angularfire": "^2.3.0",
+    "firebase": "^3.6.7",
     "lodash": "^4.17.4",
     "nodemon": "^1.11.0"
   },
