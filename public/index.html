@@ -55,9 +55,21 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
   
-  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDPYl4K8nUdS0Wh9GnK2eDKQ_6yU7y6K9M",
+      authDomain: "teller-mvp.firebaseapp.com",
+      databaseURL: "https://teller-mvp.firebaseio.com",
+      storageBucket: "teller-mvp.appspot.com",
+      messagingSenderId: "1045367682003"
+    };
+    firebase.initializeApp(config);
+  </script>
 
+  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
 
   <script src="/bundle.js"></script>
 </body>
