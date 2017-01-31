@@ -30,6 +30,7 @@
   "author": "Troy Lamerton, Rory Wagner",
   "license": "UNLICENSE",
   "dependencies": {
+    "angularfire": "^2.3.0",
     "lodash": "^4.17.4",
     "nodemon": "^1.11.0"
   },
