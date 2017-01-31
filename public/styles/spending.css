@@ -16,9 +16,8 @@
   background-color: grey;
 }
 
-.h-divider {
-  width: 1px;
-  margin: 4 0%;
+.divider {
+  margin-top: 2%;
   background-color: grey;
 }
 
