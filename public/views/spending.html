@@ -9,7 +9,7 @@
             <span ng-click="editRecord('incomes', $index, true)" class="amount teal-text text-lighten-1">{{record.amount}}</span>
           </div>
           <div class="flex inputs" ng-if="record.editing">
-            <input class="text" type="text" placeholder="Describe the expense" ng-model="record.name" ng-enter="updateRecord('incomes', $index)" />
+            <input class="text" type="text" placeholder="Describe the income" ng-model="record.name" ng-enter="updateRecord('incomes', $index)" />
             <input class="amount" type="number" placeholder="$" ng-model="record.amount" ng-enter="updateRecord('incomes', $index)" />
           </div>
           <a class="remove-button" ng-click="deleteRecord('incomes', $index)"><i class="material-icons">clear</i></a>
