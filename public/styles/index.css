@@ -26,8 +26,8 @@ nav {
   box-shadow: none;
   overflow: hidden;
 }
-nav ul {
-  overflow: hidden;
+.tabs {
+  overflow: hidden !important;
 }
 .tabs .tab a {
   color: #fff;
