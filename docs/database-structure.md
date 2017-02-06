@@ -13,5 +13,3 @@ Example of a record object in the database:
   raw: <String>, // full transaction string from the csv
 }
 ```
-
-## 
